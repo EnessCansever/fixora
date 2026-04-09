@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getHistoryDetail, getHistoryList } from '../services/historyApi'
+import { deleteHistory, getHistoryDetail, getHistoryList } from '../services/historyApi'
 
 function formatDate(value) {
   try {
@@ -15,6 +15,7 @@ function HistoryPage() {
   const [selectedDetail, setSelectedDetail] = useState(null)
   const [isListLoading, setIsListLoading] = useState(true)
   const [isDetailLoading, setIsDetailLoading] = useState(false)
+  const [deletingId, setDeletingId] = useState('')
   const [listError, setListError] = useState('')
   const [detailError, setDetailError] = useState('')
 
@@ -64,6 +65,38 @@ function HistoryPage() {
     fetchDetail()
   }, [selectedId])
 
+  const handleDelete = async (itemId) => {
+    const confirmed = window.confirm('Bu kaydi silmek istediginize emin misiniz?')
+
+    if (!confirmed) {
+      return
+    }
+
+    setListError('')
+    setDetailError('')
+    setDeletingId(itemId)
+
+    try {
+      await deleteHistory(itemId)
+
+      const updatedItems = historyItems.filter((item) => item._id !== itemId)
+      setHistoryItems(updatedItems)
+
+      if (selectedId === itemId) {
+        if (updatedItems.length > 0) {
+          setSelectedId(updatedItems[0]._id)
+        } else {
+          setSelectedId('')
+          setSelectedDetail(null)
+        }
+      }
+    } catch (error) {
+      setListError(error.message || 'Kayit silinemedi.')
+    } finally {
+      setDeletingId('')
+    }
+  }
+
   return (
     <section className="space-y-6">
       <header className="space-y-2">
@@ -107,26 +140,38 @@ function HistoryPage() {
             <ul className="mt-3 space-y-2">
               {historyItems.map((item) => {
                 const isActive = selectedId === item._id
+                const isDeleting = deletingId === item._id
 
                 return (
                   <li key={item._id}>
-                    <button
-                      type="button"
-                      onClick={() => setSelectedId(item._id)}
-                      className={`w-full rounded-lg border px-3 py-3 text-left transition ${
-                        isActive
-                          ? 'border-[#6366F1] bg-[#6366F1] text-white'
-                          : 'border-slate-200 bg-white text-slate-800 hover:bg-slate-50'
-                      }`}
-                    >
-                      <p className="text-xs font-semibold uppercase tracking-wide opacity-80">
-                        {item.category}
-                      </p>
-                      <p className="mt-1 line-clamp-2 text-sm font-medium">
-                        {item.errorMessage}
-                      </p>
-                      <p className="mt-1 text-xs opacity-70">{formatDate(item.createdAt)}</p>
-                    </button>
+                    <div className="flex items-start gap-2">
+                      <button
+                        type="button"
+                        onClick={() => setSelectedId(item._id)}
+                        className={`flex-1 rounded-lg border px-3 py-3 text-left transition ${
+                          isActive
+                            ? 'border-[#6366F1] bg-[#6366F1] text-white'
+                            : 'border-slate-200 bg-white text-slate-800 hover:bg-slate-50'
+                        }`}
+                      >
+                        <p className="text-xs font-semibold uppercase tracking-wide opacity-80">
+                          {item.category}
+                        </p>
+                        <p className="mt-1 line-clamp-2 text-sm font-medium">
+                          {item.errorMessage}
+                        </p>
+                        <p className="mt-1 text-xs opacity-70">{formatDate(item.createdAt)}</p>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => handleDelete(item._id)}
+                        disabled={isDeleting}
+                        className="rounded-md border border-slate-200 px-2 py-1 text-xs font-medium text-slate-600 transition hover:border-red-200 hover:bg-red-50 hover:text-red-700 disabled:cursor-not-allowed disabled:opacity-60"
+                      >
+                        {isDeleting ? 'Siliniyor...' : 'Sil'}
+                      </button>
+                    </div>
                   </li>
                 )
               })}

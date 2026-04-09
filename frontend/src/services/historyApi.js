@@ -21,3 +21,16 @@ export async function getHistoryDetail(id) {
 
   return result.data
 }
+
+export async function deleteHistory(id) {
+  const response = await fetch(`${API_BASE_URL}/api/history/${id}`, {
+    method: 'DELETE',
+  })
+  const result = await response.json()
+
+  if (!response.ok) {
+    throw new Error(result.error || 'Kayit silinemedi.')
+  }
+
+  return result.data
+}
