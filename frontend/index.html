@@ -4,7 +4,26 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>frontend</title>
+    <script>
+      ;(() => {
+        const themeKey = 'fixora-theme'
+        const root = document.documentElement
+
+        try {
+          const savedTheme = localStorage.getItem(themeKey)
+          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const shouldUseDark = savedTheme ? savedTheme === 'dark' : prefersDark
+
+          root.classList.toggle('dark', shouldUseDark)
+          root.style.colorScheme = shouldUseDark ? 'dark' : 'light'
+        } catch {
+          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+          root.classList.toggle('dark', prefersDark)
+          root.style.colorScheme = prefersDark ? 'dark' : 'light'
+        }
+      })()
+    </script>
+    <title>Fixora</title>
   </head>
   <body>
     <div id="root"></div>

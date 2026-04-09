@@ -103,37 +103,37 @@ function HistoryPage() {
         <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#6366F1]">
           History
         </p>
-        <h2 className="text-3xl font-bold text-slate-900">Analiz Gecmisi</h2>
-        <p className="max-w-2xl text-sm leading-6 text-slate-500">
+        <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-100">Analiz Gecmisi</h2>
+        <p className="max-w-2xl text-sm leading-6 text-slate-500 dark:text-slate-400">
           Son analizleri listeden secerek detaylarini gorebilirsin.
         </p>
       </header>
 
       {listError && (
-        <div className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-800">
+        <div className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-800 dark:border-red-500/20 dark:bg-red-500/10 dark:text-red-200">
           {listError}
         </div>
       )}
 
       {detailError && (
-        <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800">
+        <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800 dark:border-amber-500/20 dark:bg-amber-500/10 dark:text-amber-200">
           {detailError}
         </div>
       )}
 
       <div className="grid gap-4 lg:grid-cols-2">
-        <section className="rounded-xl border border-slate-200 bg-white p-4">
+        <section className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
           <div className="flex items-center justify-between gap-3">
-            <h3 className="text-base font-semibold text-slate-900">Son Analizler</h3>
-            <span className="text-xs text-slate-500">{historyItems.length} kayit</span>
+            <h3 className="text-base font-semibold text-slate-900 dark:text-slate-100">Son Analizler</h3>
+            <span className="text-xs text-slate-500 dark:text-slate-400">{historyItems.length} kayit</span>
           </div>
 
           {isListLoading && (
-            <p className="mt-3 text-sm text-slate-600">Gecmis yukleniyor...</p>
+            <p className="mt-3 text-sm text-slate-600 dark:text-slate-400">Gecmis yukleniyor...</p>
           )}
 
           {!isListLoading && historyItems.length === 0 && (
-            <p className="mt-3 text-sm text-slate-600">Henuz kayitli analiz bulunmuyor.</p>
+            <p className="mt-3 text-sm text-slate-600 dark:text-slate-400">Henuz kayitli analiz bulunmuyor.</p>
           )}
 
           {!isListLoading && historyItems.length > 0 && (
@@ -151,7 +151,7 @@ function HistoryPage() {
                         className={`flex-1 rounded-lg border px-3 py-3 text-left transition ${
                           isActive
                             ? 'border-[#6366F1] bg-[#6366F1] text-white'
-                            : 'border-slate-200 bg-white text-slate-800 hover:bg-slate-50'
+                            : 'border-slate-200 bg-white text-slate-800 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800'
                         }`}
                       >
                         <p className="text-xs font-semibold uppercase tracking-wide opacity-80">
@@ -167,7 +167,7 @@ function HistoryPage() {
                         type="button"
                         onClick={() => handleDelete(item._id)}
                         disabled={isDeleting}
-                        className="rounded-md border border-slate-200 px-2 py-1 text-xs font-medium text-slate-600 transition hover:border-red-200 hover:bg-red-50 hover:text-red-700 disabled:cursor-not-allowed disabled:opacity-60"
+                        className="rounded-md border border-slate-200 px-2 py-1 text-xs font-medium text-slate-600 transition hover:border-red-200 hover:bg-red-50 hover:text-red-700 disabled:cursor-not-allowed disabled:opacity-60 dark:border-slate-700 dark:text-slate-300 dark:hover:border-red-400/40 dark:hover:bg-red-500/10 dark:hover:text-red-300"
                       >
                         {isDeleting ? 'Siliniyor...' : 'Sil'}
                       </button>
@@ -179,46 +179,46 @@ function HistoryPage() {
           )}
         </section>
 
-        <section className="rounded-xl border border-slate-200 bg-white p-4">
-          <h3 className="text-base font-semibold text-slate-900">Detay</h3>
+        <section className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
+          <h3 className="text-base font-semibold text-slate-900 dark:text-slate-100">Detay</h3>
 
           {isDetailLoading && (
-            <p className="mt-3 text-sm text-slate-600">Detay yukleniyor...</p>
+            <p className="mt-3 text-sm text-slate-600 dark:text-slate-400">Detay yukleniyor...</p>
           )}
 
           {!isDetailLoading && !selectedDetail && (
-            <p className="mt-3 text-sm text-slate-600">Detay gormek icin listeden bir kayit sec.</p>
+            <p className="mt-3 text-sm text-slate-600 dark:text-slate-400">Detay gormek icin listeden bir kayit sec.</p>
           )}
 
           {!isDetailLoading && selectedDetail && (
             <div className="mt-3 space-y-3 text-sm">
               <div>
-                <p className="font-semibold text-slate-900">Kategori</p>
-                <p className="text-slate-700">{selectedDetail.category}</p>
+                <p className="font-semibold text-slate-900 dark:text-slate-100">Kategori</p>
+                <p className="text-slate-700 dark:text-slate-300">{selectedDetail.category}</p>
               </div>
 
               <div>
-                <p className="font-semibold text-slate-900">Kisa Ozet</p>
-                <p className="text-slate-700">{selectedDetail.shortSummary}</p>
+                <p className="font-semibold text-slate-900 dark:text-slate-100">Kisa Ozet</p>
+                <p className="text-slate-700 dark:text-slate-300">{selectedDetail.shortSummary}</p>
               </div>
 
               <div>
-                <p className="font-semibold text-slate-900">Hata Mesaji</p>
-                <p className="text-slate-700">{selectedDetail.errorMessage}</p>
+                <p className="font-semibold text-slate-900 dark:text-slate-100">Hata Mesaji</p>
+                <p className="text-slate-700 dark:text-slate-300">{selectedDetail.errorMessage}</p>
               </div>
 
               {selectedDetail.codeSnippet && (
                 <div>
-                  <p className="font-semibold text-slate-900">Kod Parcasi</p>
-                  <pre className="mt-1 overflow-x-auto rounded-lg bg-slate-900 p-3 text-xs text-slate-100">
+                  <p className="font-semibold text-slate-900 dark:text-slate-100">Kod Parcasi</p>
+                  <pre className="mt-1 overflow-x-auto rounded-lg bg-slate-900 p-3 text-xs text-slate-100 dark:bg-slate-950">
                     <code>{selectedDetail.codeSnippet}</code>
                   </pre>
                 </div>
               )}
 
               <div>
-                <p className="font-semibold text-slate-900">Olusturma Zamani</p>
-                <p className="text-slate-700">{formatDate(selectedDetail.createdAt)}</p>
+                <p className="font-semibold text-slate-900 dark:text-slate-100">Olusturma Zamani</p>
+                <p className="text-slate-700 dark:text-slate-300">{formatDate(selectedDetail.createdAt)}</p>
               </div>
             </div>
           )}

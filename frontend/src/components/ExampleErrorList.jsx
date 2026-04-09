@@ -28,9 +28,9 @@ const EXAMPLE_ERRORS = [
 
 function ExampleErrorList({ onSelect }) {
   return (
-    <section className="rounded-xl border border-slate-200 bg-white p-4">
-      <h3 className="text-sm font-semibold text-slate-900">Hizli Test Ornekleri</h3>
-      <p className="mt-1 text-sm leading-6 text-slate-500">
+    <section className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
+      <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100">Hizli Test Ornekleri</h3>
+      <p className="mt-1 text-sm leading-6 text-slate-500 dark:text-slate-400">
         Asagidaki orneklerden birine tiklayarak hata mesaji ve kod alanlarini hizlica doldurabilirsin.
       </p>
       <div className="mt-3 grid gap-2 md:grid-cols-2">
@@ -39,10 +39,10 @@ function ExampleErrorList({ onSelect }) {
             key={item.title}
             type="button"
             onClick={() => onSelect(item)}
-            className="rounded-lg border border-slate-200 bg-slate-50 p-3 text-left transition hover:border-[#6366F1]/35 hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6366F1]/25"
+            className="rounded-lg border border-slate-200 bg-slate-50 p-3 text-left transition hover:border-[#6366F1]/35 hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6366F1]/25 dark:border-slate-700 dark:bg-slate-800 dark:hover:border-[#6366F1]/45 dark:hover:bg-slate-700"
           >
-            <p className="text-xs font-semibold text-slate-900">{item.title}</p>
-            <p className="mt-1 line-clamp-2 text-xs leading-5 text-slate-600">{item.errorMessage}</p>
+            <p className="text-xs font-semibold text-slate-900 dark:text-slate-100">{item.title}</p>
+            <p className="mt-1 line-clamp-2 text-xs leading-5 text-slate-600 dark:text-slate-300">{item.errorMessage}</p>
           </button>
         ))}
       </div>
