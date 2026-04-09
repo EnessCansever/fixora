@@ -3,6 +3,37 @@ import AnalyzeResultCard from '../components/AnalyzeResultCard'
 import ExampleErrorList from '../components/ExampleErrorList'
 import { analyzeErrorMessage } from '../services/analyzeApi'
 
+function AnalyzeLoadingSkeleton() {
+  return (
+    <section className="rounded-xl border border-slate-200 bg-white p-5 md:p-6">
+      <div className="animate-pulse space-y-4">
+        <div className="space-y-2">
+          <div className="h-3 w-20 rounded bg-slate-200" />
+          <div className="h-6 w-44 rounded bg-slate-200" />
+          <div className="h-4 w-72 max-w-full rounded bg-slate-100" />
+        </div>
+
+        <div className="rounded-xl bg-slate-50 px-4 py-4">
+          <div className="h-4 w-28 rounded bg-slate-200" />
+          <div className="mt-3 space-y-2">
+            <div className="h-3 w-full rounded bg-slate-200" />
+            <div className="h-3 w-[92%] rounded bg-slate-200" />
+            <div className="h-3 w-[78%] rounded bg-slate-200" />
+          </div>
+        </div>
+
+        <div className="rounded-xl bg-slate-50 px-4 py-4">
+          <div className="h-4 w-36 rounded bg-slate-200" />
+          <div className="mt-3 space-y-2">
+            <div className="h-3 w-full rounded bg-slate-200" />
+            <div className="h-3 w-[86%] rounded bg-slate-200" />
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 function AnalyzePage() {
   const [errorMessage, setErrorMessage] = useState('')
   const [codeSnippet, setCodeSnippet] = useState('')
@@ -95,24 +126,27 @@ function AnalyzePage() {
       </form>
 
       {isLoading && (
-        <div className="rounded-xl border border-sky-200 bg-sky-50 p-4">
-          <p className="text-sm font-semibold text-sky-900">Analiz hazirlaniyor</p>
-          <p className="mt-1 text-sm text-sky-800">Lutfen bekleyin, hata mesaji yorumlaniyor.</p>
+        <div className="space-y-3">
+          <div className="rounded-xl border border-indigo-100 bg-indigo-50 p-4">
+            <p className="text-sm font-semibold text-indigo-900">Hata analiz ediliyor...</p>
+            <p className="mt-1 text-sm text-indigo-700">Kod inceleniyor, cozum onerileri hazirlaniyor.</p>
+          </div>
+          <AnalyzeLoadingSkeleton />
         </div>
       )}
 
       {!isLoading && errorText && (
         <div className="rounded-xl border border-red-200 bg-red-50 p-4">
-          <p className="text-sm font-semibold text-red-900">Analiz olusturulamadi</p>
+          <p className="text-sm font-semibold text-red-900">Analiz su anda olusturulamadi</p>
           <p className="mt-1 text-sm text-red-800">{errorText}</p>
         </div>
       )}
 
       {!isLoading && !errorText && !analysisResult && (
         <div className="rounded-xl border border-dashed border-slate-300 bg-slate-50 p-6">
-          <p className="text-sm font-semibold text-slate-800">Sonuc alani hazir</p>
+          <p className="text-sm font-semibold text-slate-800">Analiz sonucu burada gosterilecek</p>
           <p className="mt-1 text-sm text-slate-500">
-            Bir hata mesaji girip "Analiz Et" butonuna basarak sonucu bu alanda gorebilirsin.
+            Baslamak icin once hata mesaji gir. Istersen kod parcasini da ekleyip "Analiz Et" butonuna basabilirsin.
           </p>
         </div>
       )}
