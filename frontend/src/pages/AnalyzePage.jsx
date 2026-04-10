@@ -1,37 +1,88 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import AnalyzeResultCard from '../components/AnalyzeResultCard'
 import ExampleErrorList from '../components/ExampleErrorList'
 import { analyzeErrorMessage } from '../services/analyzeApi'
 
+const LOADING_MESSAGES = [
+  'Hata mesaji inceleniyor...',
+  'Muhtemel nedenler cikariliyor...',
+  'Cozum adimlari hazirlaniyor...',
+  'Fixora sonucu son kez duzenliyor...',
+]
+
 function AnalyzeLoadingSkeleton() {
   return (
-    <section className="rounded-xl border border-slate-200 bg-white p-5 md:p-6 dark:border-slate-800 dark:bg-slate-900">
-      <div className="animate-pulse space-y-4">
-        <div className="space-y-2">
+    <section className="min-h-140 rounded-xl border border-slate-200 bg-white p-5 md:p-6 dark:border-slate-800 dark:bg-slate-900">
+      <div className="animate-pulse space-y-5">
+        <div className="rounded-xl bg-slate-50 px-4 py-3 dark:bg-slate-800">
           <div className="h-3 w-20 rounded bg-slate-200 dark:bg-slate-700" />
-          <div className="h-6 w-44 rounded bg-slate-200 dark:bg-slate-700" />
-          <div className="h-4 w-72 max-w-full rounded bg-slate-100 dark:bg-slate-800" />
+          <div className="mt-2 h-6 w-28 rounded-full bg-indigo-100 dark:bg-indigo-500/25" />
         </div>
 
-        <div className="rounded-xl bg-slate-50 px-4 py-4 dark:bg-slate-800">
-          <div className="h-4 w-28 rounded bg-slate-200 dark:bg-slate-700" />
-          <div className="mt-3 space-y-2">
-            <div className="h-3 w-full rounded bg-slate-200 dark:bg-slate-700" />
-            <div className="h-3 w-[92%] rounded bg-slate-200 dark:bg-slate-700" />
-            <div className="h-3 w-[78%] rounded bg-slate-200 dark:bg-slate-700" />
+        <div className="space-y-4 border-t border-slate-100 pt-5 dark:border-slate-800">
+          <div className="rounded-xl bg-slate-50 px-4 py-4 dark:bg-slate-800">
+            <div className="h-4 w-28 rounded bg-slate-200 dark:bg-slate-700" />
+            <div className="mt-3 space-y-2">
+              <div className="h-3 w-full rounded bg-slate-200 dark:bg-slate-700" />
+              <div className="h-3 w-[92%] rounded bg-slate-200 dark:bg-slate-700" />
+            </div>
           </div>
-        </div>
 
-        <div className="rounded-xl bg-slate-50 px-4 py-4 dark:bg-slate-800">
-          <div className="h-4 w-36 rounded bg-slate-200 dark:bg-slate-700" />
-          <div className="mt-3 space-y-2">
-            <div className="h-3 w-full rounded bg-slate-200 dark:bg-slate-700" />
-            <div className="h-3 w-[86%] rounded bg-slate-200 dark:bg-slate-700" />
+          <div className="rounded-xl bg-slate-50 px-4 py-4 dark:bg-slate-800">
+            <div className="h-4 w-40 rounded bg-slate-200 dark:bg-slate-700" />
+            <div className="mt-3 space-y-2">
+              <div className="h-3 w-full rounded bg-slate-200 dark:bg-slate-700" />
+              <div className="h-3 w-[89%] rounded bg-slate-200 dark:bg-slate-700" />
+            </div>
+          </div>
+
+          <div className="rounded-xl bg-slate-50 px-4 py-4 dark:bg-slate-800">
+            <div className="h-4 w-36 rounded bg-slate-200 dark:bg-slate-700" />
+            <div className="mt-3 space-y-2">
+              <div className="h-3 w-full rounded bg-slate-200 dark:bg-slate-700" />
+              <div className="h-3 w-[84%] rounded bg-slate-200 dark:bg-slate-700" />
+              <div className="h-3 w-[76%] rounded bg-slate-200 dark:bg-slate-700" />
+            </div>
+          </div>
+
+          <div className="rounded-xl bg-slate-50 px-4 py-4 dark:bg-slate-800">
+            <div className="h-4 w-32 rounded bg-slate-200 dark:bg-slate-700" />
+            <div className="mt-3 space-y-2">
+              <div className="h-3 w-full rounded bg-slate-200 dark:bg-slate-700" />
+              <div className="h-3 w-[91%] rounded bg-slate-200 dark:bg-slate-700" />
+            </div>
+          </div>
+
+          <div className="overflow-hidden rounded-xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900">
+            <div className="flex items-center justify-between border-b border-slate-200 bg-slate-100 px-3 py-2 dark:border-slate-700 dark:bg-slate-800">
+              <div className="h-3 w-20 rounded bg-slate-200 dark:bg-slate-600" />
+              <div className="h-6 w-16 rounded bg-indigo-100 dark:bg-indigo-500/25" />
+            </div>
+            <div className="space-y-2 p-4">
+              <div className="h-3 w-[96%] rounded bg-slate-200 dark:bg-slate-700" />
+              <div className="h-3 w-[88%] rounded bg-slate-200 dark:bg-slate-700" />
+              <div className="h-3 w-[80%] rounded bg-slate-200 dark:bg-slate-700" />
+            </div>
           </div>
         </div>
       </div>
     </section>
+  )
+}
+
+function StagedLoadingMessage({ message, step }) {
+  return (
+    <div className="rounded-xl border border-indigo-100 bg-indigo-50 p-4 dark:border-indigo-500/20 dark:bg-indigo-500/10">
+      <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-indigo-600 dark:text-indigo-300">
+        <span className="inline-block h-2 w-2 rounded-full bg-[#6366F1]" />
+        Analiz Suruyor
+      </div>
+      <p className="mt-2 text-sm font-semibold text-indigo-900 dark:text-indigo-200">{message}</p>
+      <p className="mt-1 text-xs text-indigo-700 dark:text-indigo-300">
+        Adim {step} / {LOADING_MESSAGES.length}
+      </p>
+    </div>
   )
 }
 
@@ -41,6 +92,26 @@ function AnalyzePage() {
   const [analysisResult, setAnalysisResult] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
   const [errorText, setErrorText] = useState('')
+  const [loadingMessageIndex, setLoadingMessageIndex] = useState(0)
+
+  useEffect(() => {
+    if (!isLoading) {
+      setLoadingMessageIndex(0)
+      return
+    }
+
+    const interval = window.setInterval(() => {
+      setLoadingMessageIndex((prevIndex) => {
+        if (prevIndex >= LOADING_MESSAGES.length - 1) {
+          return prevIndex
+        }
+
+        return prevIndex + 1
+      })
+    }, 1200)
+
+    return () => window.clearInterval(interval)
+  }, [isLoading])
 
   const handleSubmit = async (event) => {
     event.preventDefault()
@@ -132,10 +203,10 @@ function AnalyzePage() {
 
       {isLoading && (
         <div className="space-y-3">
-          <div className="rounded-xl border border-indigo-100 bg-indigo-50 p-4 dark:border-indigo-500/20 dark:bg-indigo-500/10">
-            <p className="text-sm font-semibold text-indigo-900 dark:text-indigo-200">Hata analiz ediliyor...</p>
-            <p className="mt-1 text-sm text-indigo-700 dark:text-indigo-300">Kod inceleniyor, cozum onerileri hazirlaniyor.</p>
-          </div>
+          <StagedLoadingMessage
+            message={LOADING_MESSAGES[loadingMessageIndex]}
+            step={loadingMessageIndex + 1}
+          />
           <AnalyzeLoadingSkeleton />
         </div>
       )}
@@ -162,6 +233,5 @@ function AnalyzePage() {
     </section>
   )
 }
-
 
 export default AnalyzePage
