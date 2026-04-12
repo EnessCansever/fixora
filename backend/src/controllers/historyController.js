@@ -64,8 +64,52 @@ async function deleteHistoryById(req, res) {
   }
 }
 
+async function submitHistoryFeedback(req, res) {
+  try {
+    const { id } = req.params
+    const { feedbackType } = req.body
+
+    if (feedbackType !== 'positive' && feedbackType !== 'negative') {
+      return res.status(400).json({
+        success: false,
+        error: 'feedbackType sadece positive veya negative olabilir.',
+      })
+    }
+
+    const updateField = feedbackType === 'positive' ? 'positiveFeedbackCount' : 'negativeFeedbackCount'
+
+    const updatedItem = await History.findByIdAndUpdate(
+      id,
+      { $inc: { [updateField]: 1 } },
+      { returnDocument: 'after', runValidators: true },
+    ).select('_id positiveFeedbackCount negativeFeedbackCount')
+
+    if (!updatedItem) {
+      return res.status(404).json({
+        success: false,
+        error: 'Gecmis kaydi bulunamadi.',
+      })
+    }
+
+    return res.json({
+      success: true,
+      data: {
+        id: updatedItem._id,
+        positiveFeedbackCount: updatedItem.positiveFeedbackCount,
+        negativeFeedbackCount: updatedItem.negativeFeedbackCount,
+      },
+    })
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      error: 'Geri bildirim guncellenemedi.',
+    })
+  }
+}
+
 module.exports = {
   getHistory,
   getHistoryById,
   deleteHistoryById,
+  submitHistoryFeedback,
 }

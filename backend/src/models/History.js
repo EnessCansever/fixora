@@ -39,6 +39,14 @@ const historySchema = new mongoose.Schema(
       type: String,
       default: '',
     },
+    positiveFeedbackCount: {
+      type: Number,
+      default: 0,
+    },
+    negativeFeedbackCount: {
+      type: Number,
+      default: 0,
+    },
   },
   {
     timestamps: true,

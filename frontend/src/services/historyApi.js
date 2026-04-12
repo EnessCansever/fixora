@@ -34,3 +34,21 @@ export async function deleteHistory(id) {
 
   return result.data
 }
+
+export async function sendHistoryFeedback(id, feedbackType) {
+  const response = await fetch(buildApiUrl(`/history/${id}/feedback`), {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ feedbackType }),
+  })
+
+  const result = await response.json()
+
+  if (!response.ok) {
+    throw new Error(result.error || 'Geri bildirim gonderilemedi.')
+  }
+
+  return result.data
+}

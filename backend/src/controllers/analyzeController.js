@@ -89,9 +89,11 @@ async function analyzeError(req, res) {
       analysis = await analyzeService.analyzeError(errorMessage, codeSnippet)
     }
 
+    let historyId = null
+
     // Analiz sonucu olusunca gecmise kaydet (kayit hatasi analiz akisini bozmaz)
     try {
-      await History.create({
+      const createdHistory = await History.create({
         errorMessage,
         codeSnippet: codeSnippet || '',
         category: analysis.category,
@@ -102,13 +104,18 @@ async function analyzeError(req, res) {
         exampleFixCode: analysis.exampleFixCode || '',
         notes: analysis.notes || '',
       })
+
+      historyId = createdHistory._id?.toString() || null
     } catch (historyError) {
       console.warn('[history] Kayit olusturulamadi:', historyError.message)
     }
 
     res.json({
       success: true,
-      data: analysis,
+      data: {
+        ...analysis,
+        historyId,
+      },
     })
   } catch (error) {
     console.error('Analyze controller hatası:', error)

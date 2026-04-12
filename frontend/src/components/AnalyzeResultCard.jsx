@@ -3,6 +3,7 @@ import { CheckCircleIcon, InformationCircleIcon } from '@heroicons/react/24/outl
 import toast from 'react-hot-toast'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { oneDark, oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism'
+import { sendHistoryFeedback } from '../services/historyApi'
 
 const badgeByCategory = {
   'Type Error': 'bg-amber-100 text-amber-800',
@@ -16,6 +17,7 @@ const badgeByCategory = {
 
 function AnalyzeResultCard({ result }) {
   const [copied, setCopied] = useState(false)
+  const [isSendingFeedback, setIsSendingFeedback] = useState(false)
 
   const copyCode = async () => {
     if (!result.exampleFixCode) {
@@ -35,6 +37,29 @@ function AnalyzeResultCard({ result }) {
   }
 
   const badgeClass = badgeByCategory[result.category] || badgeByCategory.Unknown
+
+  const handleFeedback = async (feedbackType) => {
+    if (!result.historyId) {
+      toast.error('Geri bildirim gonderilemedi. Lütfen tekrar deneyin.')
+      return
+    }
+
+    setIsSendingFeedback(true)
+
+    try {
+      await sendHistoryFeedback(result.historyId, feedbackType)
+
+      if (feedbackType === 'positive') {
+        toast.success('Geri bildirimin için teşekkürler.')
+      } else {
+        toast.success('Teşekkürler. Bunu geliştirmek için not aldık.')
+      }
+    } catch (error) {
+      toast.error('Geri bildirim gönderilemedi. Lütfen tekrar deneyin.')
+    } finally {
+      setIsSendingFeedback(false)
+    }
+  }
 
   return (
     <section className="rounded-xl border border-slate-200 bg-white p-5 md:p-6 dark:border-slate-800 dark:bg-slate-900">
@@ -137,6 +162,28 @@ function AnalyzeResultCard({ result }) {
           <div className="rounded-xl bg-slate-50 px-4 py-4 dark:bg-slate-800">
             <h3 className="text-base font-semibold text-slate-900 dark:text-slate-100">Dikkat Edilmesi Gerekenler</h3>
             <p className="mt-2 text-sm leading-6 text-slate-700 dark:text-slate-300">{result.notes}</p>
+          </div>
+
+          <div className="rounded-xl bg-slate-50 px-4 py-4 dark:bg-slate-800">
+            <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">Bu sonuc faydali oldu mu?</p>
+            <div className="mt-3 flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => handleFeedback('positive')}
+                disabled={isSendingFeedback || !result.historyId}
+                className="rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6366F1]/35 disabled:cursor-not-allowed disabled:opacity-60 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
+              >
+                👍
+              </button>
+              <button
+                type="button"
+                onClick={() => handleFeedback('negative')}
+                disabled={isSendingFeedback || !result.historyId}
+                className="rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6366F1]/35 disabled:cursor-not-allowed disabled:opacity-60 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
+              >
+                👎
+              </button>
+            </div>
           </div>
         </div>
       </div>
