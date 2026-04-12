@@ -4,6 +4,7 @@ const dotenv = require('dotenv')
 const apiRoutes = require('./routes')
 const { connectDatabase } = require('./config/database')
 const { loadEnvConfig } = require('./config/env')
+const { requestLogger } = require('./middlewares/requestLogger')
 
 dotenv.config()
 const env = loadEnvConfig()
@@ -31,9 +32,17 @@ const corsOptions = {
 
 app.use(cors(corsOptions))
 app.use(express.json())
+app.use(requestLogger)
 
 app.get('/', (req, res) => {
   res.json({ message: 'ErrorInsight backend ayakta.' })
+})
+
+app.get('/health', (req, res) => {
+  res.json({
+    success: true,
+    status: 'ok',
+  })
 })
 
 app.use('/api', apiRoutes)

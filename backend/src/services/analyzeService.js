@@ -307,6 +307,7 @@ function normalizeAnalysis(rawResult, errorMessage, codeSnippet) {
 async function analyzeError(errorMessage, codeSnippet = '') {
   const apiKey = process.env.GEMINI_API_KEY
   const suggestedCategory = categorizeError(errorMessage)
+  const isDevelopment = (process.env.NODE_ENV || 'development') === 'development'
 
   if (!apiKey) {
     console.warn('[analyzeService] GEMINI_API_KEY bulunamadi, fallback kullaniliyor.')
@@ -324,7 +325,9 @@ async function analyzeError(errorMessage, codeSnippet = '') {
     })
     const responseText = getTextFromGenAIResponse(result)
 
-    console.log(`[analyzeService] Gemini raw: ${String(responseText).replace(/\s+/g, ' ').slice(0, 280)}`)
+    if (isDevelopment) {
+      console.log(`[analyzeService] Gemini raw: ${String(responseText).replace(/\s+/g, ' ').slice(0, 280)}`)
+    }
 
     let parsedResult = null
     try {
