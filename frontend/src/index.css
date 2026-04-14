@@ -17,6 +17,10 @@ body,
   max-width: 100%;
 }
 
+html {
+  overflow-x: clip;
+}
+
 img,
 svg,
 video,

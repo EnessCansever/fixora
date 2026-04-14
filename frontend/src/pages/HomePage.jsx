@@ -106,31 +106,31 @@ function HomePage() {
 
       <section className="space-y-5">
         <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Mini Demo</h2>
-        <div className="grid gap-4 lg:grid-cols-2">
-          <article className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+        <div className="grid min-w-0 gap-4 lg:grid-cols-2">
+          <article className="min-w-0 rounded-xl border border-slate-200 bg-white p-4 sm:p-5 dark:border-slate-800 dark:bg-slate-900">
             <p className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Input</p>
             <h3 className="mt-2 text-sm font-semibold text-slate-900 dark:text-slate-100">Ornek Hata Mesaji</h3>
-            <div className="mt-3 rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200">
+            <div className="mt-3 rounded-lg border border-slate-200 bg-slate-50 p-2.5 text-sm wrap-break-word text-slate-700 sm:p-3 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200">
               Uncaught TypeError: Cannot read properties of undefined (reading 'map')
             </div>
 
             <h3 className="mt-4 text-sm font-semibold text-slate-900 dark:text-slate-100">Probleme Neden Olan Kod</h3>
             <div className="mt-2 overflow-x-auto rounded-lg border border-slate-200 dark:border-slate-700">
-              <div className="min-w-75 dark:hidden">
+              <div className="min-w-0 dark:hidden">
                 <SyntaxHighlighter
                   language="javascript"
                   style={oneLight}
-                  customStyle={{ margin: 0, padding: '12px', fontSize: '12px', background: '#f8fafc' }}
+                  customStyle={{ margin: 0, padding: '12px', fontSize: '11px', background: '#f8fafc', minWidth: 'max-content' }}
                   showLineNumbers
                 >
                   {demoCode}
                 </SyntaxHighlighter>
               </div>
-              <div className="hidden min-w-75 dark:block">
+              <div className="hidden min-w-0 dark:block">
                 <SyntaxHighlighter
                   language="javascript"
                   style={oneDark}
-                  customStyle={{ margin: 0, padding: '12px', fontSize: '12px', background: '#0f172a' }}
+                  customStyle={{ margin: 0, padding: '12px', fontSize: '11px', background: '#0f172a', minWidth: 'max-content' }}
                   showLineNumbers
                 >
                   {demoCode}
@@ -139,7 +139,7 @@ function HomePage() {
             </div>
           </article>
 
-          <article className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+          <article className="min-w-0 rounded-xl border border-slate-200 bg-white p-4 sm:p-5 dark:border-slate-800 dark:bg-slate-900">
             <p className="text-xs font-semibold uppercase tracking-wide text-[#6366F1]">Fixora Output</p>
             <div className="mt-3 space-y-3">
               <div className="rounded-lg bg-slate-50 p-3 dark:bg-slate-800">
