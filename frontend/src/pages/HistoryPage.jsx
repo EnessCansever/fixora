@@ -102,12 +102,12 @@ function HistoryPage() {
   }
 
   return (
-    <section className="space-y-6">
+    <section className="space-y-5 sm:space-y-6">
       <header className="space-y-2">
         <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#6366F1]">
           History
         </p>
-        <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-100">Analiz Gecmisi</h2>
+        <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl dark:text-slate-100">Analiz Gecmisi</h2>
         <p className="max-w-2xl text-sm leading-6 text-slate-500 dark:text-slate-400">
           Son analizleri listeden secerek detaylarini gorebilirsin.
         </p>
@@ -148,7 +148,7 @@ function HistoryPage() {
 
                 return (
                   <li key={item._id}>
-                    <div className="flex items-start gap-2">
+                    <div className="flex flex-col gap-2 sm:flex-row sm:items-start">
                       <button
                         type="button"
                         onClick={() => setSelectedId(item._id)}
@@ -161,7 +161,7 @@ function HistoryPage() {
                         <p className="text-xs font-semibold uppercase tracking-wide opacity-80">
                           {item.category}
                         </p>
-                        <p className="mt-1 line-clamp-2 text-sm font-medium">
+                        <p className="mt-1 line-clamp-2 wrap-break-word text-sm font-medium">
                           {item.errorMessage}
                         </p>
                         <p className="mt-1 text-xs opacity-70">{formatDate(item.createdAt)}</p>
@@ -171,7 +171,7 @@ function HistoryPage() {
                         type="button"
                         onClick={() => handleDelete(item._id)}
                         disabled={isDeleting}
-                        className="rounded-md border border-slate-200 px-2 py-1 text-xs font-medium text-slate-600 transition hover:border-red-200 hover:bg-red-50 hover:text-red-700 disabled:cursor-not-allowed disabled:opacity-60 dark:border-slate-700 dark:text-slate-300 dark:hover:border-red-400/40 dark:hover:bg-red-500/10 dark:hover:text-red-300"
+                        className="inline-flex min-h-10 items-center justify-center rounded-md border border-slate-200 px-3 py-2 text-xs font-medium text-slate-600 transition hover:border-red-200 hover:bg-red-50 hover:text-red-700 disabled:cursor-not-allowed disabled:opacity-60 dark:border-slate-700 dark:text-slate-300 dark:hover:border-red-400/40 dark:hover:bg-red-500/10 dark:hover:text-red-300 sm:min-h-0 sm:px-2 sm:py-1"
                       >
                         {isDeleting ? 'Siliniyor...' : 'Sil'}
                       </button>
@@ -208,7 +208,7 @@ function HistoryPage() {
 
               <div>
                 <p className="font-semibold text-slate-900 dark:text-slate-100">Hata Mesaji</p>
-                <p className="text-slate-700 dark:text-slate-300">{selectedDetail.errorMessage}</p>
+                <p className="wrap-break-word text-slate-700 dark:text-slate-300">{selectedDetail.errorMessage}</p>
               </div>
 
               {selectedDetail.codeSnippet && (

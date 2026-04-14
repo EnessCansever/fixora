@@ -5,9 +5,9 @@ import Footer from '../components/Footer'
 
 function MainLayout() {
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100">
+    <div className="min-h-screen overflow-x-clip bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100">
       <Navbar />
-      <main className="mx-auto w-full max-w-5xl px-4 py-8">
+      <main className="mx-auto w-full max-w-6xl px-3 py-5 sm:px-4 sm:py-6 md:py-8">
         <Outlet />
       </main>
       <Toaster

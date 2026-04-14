@@ -62,12 +62,12 @@ function AnalyzeResultCard({ result }) {
   }
 
   return (
-    <section className="rounded-xl border border-slate-200 bg-white p-5 md:p-6 dark:border-slate-800 dark:bg-slate-900">
+    <section className="rounded-xl border border-slate-200 bg-white p-4 sm:p-5 md:p-6 dark:border-slate-800 dark:bg-slate-900">
       <header className="mb-5 border-b border-slate-200 pb-4 dark:border-slate-800">
         <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#6366F1]">
           Result
         </p>
-        <h3 className="mt-1 text-xl font-bold text-slate-900 dark:text-slate-100">Analiz Sonucu</h3>
+        <h3 className="mt-1 text-lg font-bold text-slate-900 sm:text-xl dark:text-slate-100">Analiz Sonucu</h3>
         <p className="mt-1 text-sm leading-6 text-slate-500 dark:text-slate-400">
           Hata mesaji icin uretilen aciklama ve cozum onerileri.
         </p>
@@ -84,12 +84,12 @@ function AnalyzeResultCard({ result }) {
         <div className="space-y-4 border-t border-slate-100 pt-5 dark:border-slate-800">
           <div className="rounded-xl bg-slate-50 px-4 py-4 dark:bg-slate-800">
             <h3 className="text-base font-semibold text-slate-900 dark:text-slate-100">Kisa Ozet</h3>
-            <p className="mt-2 text-sm leading-6 text-slate-700 dark:text-slate-300">{result.shortSummary}</p>
+            <p className="mt-2 wrap-break-word text-sm leading-6 text-slate-700 dark:text-slate-300">{result.shortSummary}</p>
           </div>
 
           <div className="rounded-xl bg-slate-50 px-4 py-4 dark:bg-slate-800">
             <h3 className="text-base font-semibold text-slate-900 dark:text-slate-100">Turkce Aciklama</h3>
-            <p className="mt-2 text-sm leading-6 text-slate-700 dark:text-slate-300">{result.turkishExplanation}</p>
+            <p className="mt-2 wrap-break-word text-sm leading-6 text-slate-700 dark:text-slate-300">{result.turkishExplanation}</p>
           </div>
 
           <div className="rounded-xl bg-slate-50 px-4 py-4 dark:bg-slate-800">
@@ -98,7 +98,7 @@ function AnalyzeResultCard({ result }) {
               {result.possibleCauses?.map((cause) => (
                 <li key={cause} className="flex items-start gap-2 text-sm text-slate-700 dark:text-slate-300">
                   <InformationCircleIcon className="mt-0.5 h-4 w-4 shrink-0 text-slate-500 dark:text-slate-400" />
-                  <span>{cause}</span>
+                  <span className="wrap-break-word">{cause}</span>
                 </li>
               ))}
             </ul>
@@ -110,7 +110,7 @@ function AnalyzeResultCard({ result }) {
               {result.solutionSteps?.map((step, index) => (
                 <li key={step} className="flex items-start gap-2 text-sm text-slate-700 dark:text-slate-300">
                   <CheckCircleIcon className="mt-0.5 h-4 w-4 shrink-0 text-[#6366F1]" />
-                  <span>
+                  <span className="wrap-break-word">
                     <span className="mr-1 font-medium text-slate-800 dark:text-slate-200">{index + 1}.</span>
                     {step}
                   </span>
@@ -123,31 +123,31 @@ function AnalyzeResultCard({ result }) {
             <h3 className="text-base font-semibold text-slate-900 dark:text-slate-100">Ornek Duzeltilmis Kod</h3>
             {result.exampleFixCode ? (
               <div className="mt-3 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900">
-                <div className="flex items-center justify-between border-b border-slate-200 bg-slate-100 px-3 py-2 dark:border-slate-700 dark:bg-slate-800">
+                <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 bg-slate-100 px-3 py-2 dark:border-slate-700 dark:bg-slate-800">
                   <span className="text-xs font-medium text-slate-600 dark:text-slate-300">example.js</span>
                   <button
                     type="button"
                     onClick={copyCode}
-                    className="rounded border border-indigo-200 bg-indigo-50 px-2 py-1 text-xs font-semibold text-[#6366F1] hover:bg-indigo-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6366F1]/35 dark:border-indigo-500/30 dark:bg-indigo-500/15 dark:text-indigo-300 dark:hover:bg-indigo-500/25"
+                    className="inline-flex min-h-9 items-center rounded border border-indigo-200 bg-indigo-50 px-2.5 py-1 text-xs font-semibold text-[#6366F1] hover:bg-indigo-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6366F1]/35 dark:border-indigo-500/30 dark:bg-indigo-500/15 dark:text-indigo-300 dark:hover:bg-indigo-500/25"
                   >
                     {copied ? 'Kopyalandi' : 'Kopyala'}
                   </button>
                 </div>
-                <div className="dark:hidden">
+                <div className="overflow-x-auto dark:hidden">
                   <SyntaxHighlighter
                     language="javascript"
                     style={oneLight}
-                    customStyle={{ margin: 0, padding: '16px', fontSize: '12px', background: '#ffffff' }}
+                    customStyle={{ margin: 0, padding: '16px', fontSize: '12px', background: '#ffffff', minWidth: '320px' }}
                     showLineNumbers
                   >
                     {result.exampleFixCode}
                   </SyntaxHighlighter>
                 </div>
-                <div className="hidden dark:block">
+                <div className="hidden overflow-x-auto dark:block">
                   <SyntaxHighlighter
                     language="javascript"
                     style={oneDark}
-                    customStyle={{ margin: 0, padding: '16px', fontSize: '12px', background: '#0f172a' }}
+                    customStyle={{ margin: 0, padding: '16px', fontSize: '12px', background: '#0f172a', minWidth: '320px' }}
                     showLineNumbers
                   >
                     {result.exampleFixCode}
@@ -161,7 +161,7 @@ function AnalyzeResultCard({ result }) {
 
           <div className="rounded-xl bg-slate-50 px-4 py-4 dark:bg-slate-800">
             <h3 className="text-base font-semibold text-slate-900 dark:text-slate-100">Dikkat Edilmesi Gerekenler</h3>
-            <p className="mt-2 text-sm leading-6 text-slate-700 dark:text-slate-300">{result.notes}</p>
+            <p className="mt-2 wrap-break-word text-sm leading-6 text-slate-700 dark:text-slate-300">{result.notes}</p>
           </div>
 
           <div className="rounded-xl bg-slate-50 px-4 py-4 dark:bg-slate-800">
@@ -171,7 +171,7 @@ function AnalyzeResultCard({ result }) {
                 type="button"
                 onClick={() => handleFeedback('positive')}
                 disabled={isSendingFeedback || !result.historyId}
-                className="rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6366F1]/35 disabled:cursor-not-allowed disabled:opacity-60 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
+                className="inline-flex min-h-10 min-w-10 items-center justify-center rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6366F1]/35 disabled:cursor-not-allowed disabled:opacity-60 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
               >
                 👍
               </button>
@@ -179,7 +179,7 @@ function AnalyzeResultCard({ result }) {
                 type="button"
                 onClick={() => handleFeedback('negative')}
                 disabled={isSendingFeedback || !result.historyId}
-                className="rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6366F1]/35 disabled:cursor-not-allowed disabled:opacity-60 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
+                className="inline-flex min-h-10 min-w-10 items-center justify-center rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6366F1]/35 disabled:cursor-not-allowed disabled:opacity-60 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
               >
                 👎
               </button>

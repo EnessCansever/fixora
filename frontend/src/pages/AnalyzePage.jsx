@@ -13,7 +13,7 @@ const LOADING_MESSAGES = [
 
 function AnalyzeLoadingSkeleton() {
   return (
-    <section className="min-h-140 rounded-xl border border-slate-200 bg-white p-5 md:p-6 dark:border-slate-800 dark:bg-slate-900">
+    <section className="min-h-120 rounded-xl border border-slate-200 bg-white p-4 sm:p-5 md:min-h-140 md:p-6 dark:border-slate-800 dark:bg-slate-900">
       <div className="animate-pulse space-y-5">
         <div className="rounded-xl bg-slate-50 px-4 py-3 dark:bg-slate-800">
           <div className="h-3 w-20 rounded bg-slate-200 dark:bg-slate-700" />
@@ -152,12 +152,12 @@ function AnalyzePage() {
   }
 
   return (
-    <section className="space-y-6">
+    <section className="space-y-5 sm:space-y-6">
       <header className="space-y-2">
         <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#6366F1]">
           Analyze
         </p>
-        <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-100">Hata Analizi</h2>
+        <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl dark:text-slate-100">Hata Analizi</h2>
         <p className="max-w-2xl text-sm leading-6 text-slate-500 dark:text-slate-400">
           Ingilizce hata mesajini gir, istersen ilgili kodu ekle. Sistem bu veriyi backend analiz servisine gonderir ve sonucu Turkce olarak gosterir.
         </p>
@@ -165,7 +165,7 @@ function AnalyzePage() {
 
       <ExampleErrorList onSelect={handleExampleSelect} />
 
-      <form onSubmit={handleSubmit} className="space-y-4 rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+      <form onSubmit={handleSubmit} className="space-y-4 rounded-xl border border-slate-200 bg-white p-4 sm:p-5 dark:border-slate-800 dark:bg-slate-900">
         <div className="space-y-1">
           <label htmlFor="errorMessage" className="text-sm font-semibold text-slate-900 dark:text-slate-100">
             Hata Mesaji <span className="text-red-500">*</span>
@@ -195,7 +195,7 @@ function AnalyzePage() {
         <button
           type="submit"
           disabled={isLoading}
-          className="inline-flex items-center rounded-lg bg-linear-to-r from-[#6366F1] to-[#7C3AED] px-5 py-2.5 text-sm font-semibold text-white shadow-md shadow-indigo-200 transition duration-200 hover:-translate-y-1 hover:shadow-lg hover:shadow-indigo-300/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6366F1]/35 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0"
+          className="inline-flex min-h-11 w-full items-center justify-center rounded-lg bg-linear-to-r from-[#6366F1] to-[#7C3AED] px-5 py-2.5 text-sm font-semibold text-white shadow-md shadow-indigo-200 transition duration-200 hover:-translate-y-1 hover:shadow-lg hover:shadow-indigo-300/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6366F1]/35 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 sm:w-auto"
         >
           {isLoading ? 'Analiz ediliyor...' : 'Analiz Et'}
         </button>

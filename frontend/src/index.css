@@ -7,6 +7,22 @@ body {
   font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f8fafc;
   color: #1e293b;
+  overflow-x: hidden;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  max-width: 100%;
+}
+
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+  height: auto;
 }
 
 html.dark body {
@@ -16,6 +32,15 @@ html.dark body {
 
 * {
   box-sizing: border-box;
+}
+
+p,
+h1,
+h2,
+h3,
+li,
+span {
+  overflow-wrap: anywhere;
 }
 
 .fixora-toast {

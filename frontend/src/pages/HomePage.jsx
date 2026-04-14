@@ -40,32 +40,32 @@ const demoCode = `const names = users.map((user) => user.name)`
 
 function HomePage() {
   return (
-    <section className="space-y-14 pb-4">
-      <header className="space-y-6">
+    <section className="space-y-10 pb-2 sm:space-y-12 md:space-y-14 md:pb-4">
+      <header className="space-y-5 sm:space-y-6">
         <div className="inline-flex items-center rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1 text-xs font-semibold text-[#6366F1] dark:border-indigo-500/30 dark:bg-indigo-500/10 dark:text-indigo-300">
           Fixora • Hata Analizi
         </div>
 
         <div className="space-y-4">
-          <h1 className="max-w-5xl text-4xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100 md:text-6xl">
+          <h1 className="max-w-5xl text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl dark:text-slate-100 md:text-5xl lg:text-6xl">
             Ingilizce hata mesajlarini, uygulanabilir Turkce cozumlere donustur.
           </h1>
-          <p className="max-w-3xl text-base leading-7 text-slate-600 dark:text-slate-400">
+          <p className="max-w-3xl text-sm leading-7 text-slate-600 sm:text-base dark:text-slate-400">
             Fixora, gordugun hatanin ne anlama geldigini saniyeler icinde aciklar. Muhtemel nedenleri,
             adim adim cozum onerisini ve ornek duzeltilmis kodu tek ekranda sunar.
           </p>
         </div>
 
-        <div className="flex flex-wrap gap-3">
+        <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
           <Link
             to="/analyze"
-            className="inline-flex items-center rounded-lg bg-linear-to-r from-[#6366F1] to-[#7C3AED] px-5 py-2.5 text-sm font-semibold text-white shadow-md shadow-indigo-200 transition hover:-translate-y-0.5 hover:shadow-lg hover:shadow-indigo-300/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6366F1]/35"
+            className="inline-flex min-h-11 items-center justify-center rounded-lg bg-linear-to-r from-[#6366F1] to-[#7C3AED] px-5 py-2.5 text-sm font-semibold text-white shadow-md shadow-indigo-200 transition hover:-translate-y-0.5 hover:shadow-lg hover:shadow-indigo-300/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6366F1]/35"
           >
             Hemen Analiz Et
           </Link>
           <Link
             to="/history"
-            className="inline-flex items-center rounded-lg border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-[#6366F1]/35 hover:text-[#6366F1] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6366F1]/35 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:border-indigo-400/40 dark:hover:text-indigo-300"
+            className="inline-flex min-h-11 items-center justify-center rounded-lg border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-[#6366F1]/35 hover:text-[#6366F1] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6366F1]/35 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:border-indigo-400/40 dark:hover:text-indigo-300"
           >
             Gecmisi Goruntule
           </Link>
@@ -115,8 +115,8 @@ function HomePage() {
             </div>
 
             <h3 className="mt-4 text-sm font-semibold text-slate-900 dark:text-slate-100">Probleme Neden Olan Kod</h3>
-            <div className="mt-2 overflow-hidden rounded-lg border border-slate-200 dark:border-slate-700">
-              <div className="dark:hidden">
+            <div className="mt-2 overflow-x-auto rounded-lg border border-slate-200 dark:border-slate-700">
+              <div className="min-w-75 dark:hidden">
                 <SyntaxHighlighter
                   language="javascript"
                   style={oneLight}
@@ -126,7 +126,7 @@ function HomePage() {
                   {demoCode}
                 </SyntaxHighlighter>
               </div>
-              <div className="hidden dark:block">
+              <div className="hidden min-w-75 dark:block">
                 <SyntaxHighlighter
                   language="javascript"
                   style={oneDark}
@@ -172,12 +172,12 @@ function HomePage() {
       <section className="rounded-2xl border border-indigo-200 bg-linear-to-r from-indigo-50 to-white p-6 dark:border-indigo-500/30 dark:from-indigo-500/10 dark:to-slate-900">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Hemen Basla</h2>
+            <h2 className="text-xl font-bold text-slate-900 sm:text-2xl dark:text-slate-100">Hemen Basla</h2>
             <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">Ilk hatani simdi analiz et ve cozum yolunu netlestir.</p>
           </div>
           <Link
             to="/analyze"
-            className="inline-flex items-center justify-center rounded-lg bg-[#6366F1] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#5558E8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6366F1]/35"
+            className="inline-flex min-h-11 items-center justify-center rounded-lg bg-[#6366F1] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#5558E8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6366F1]/35"
           >
             Hemen Analiz Et
           </Link>
