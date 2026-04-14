@@ -11,7 +11,7 @@ const analyzeRateLimiter = rateLimit({
   handler: (req, res) => {
     res.status(429).json({
       success: false,
-      message: 'Cok fazla analiz istegi gonderildi. Lutfen biraz sonra tekrar deneyin.',
+      message: 'Çok fazla analiz isteği gönderildi. Lütfen biraz sonra tekrar deneyin.',
     })
   },
 })

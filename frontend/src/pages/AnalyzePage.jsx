@@ -5,10 +5,10 @@ import ExampleErrorList from '../components/ExampleErrorList'
 import { analyzeErrorMessage } from '../services/analyzeApi'
 
 const LOADING_MESSAGES = [
-  'Hata mesaji inceleniyor...',
-  'Muhtemel nedenler cikariliyor...',
-  'Cozum adimlari hazirlaniyor...',
-  'Fixora sonucu son kez duzenliyor...',
+  'Hata mesajı inceleniyor...',
+  'Muhtemel nedenler çıkarılıyor...',
+  'Çözüm adımları hazırlanıyor...',
+  'Fixora sonucu son kez düzenliyor...',
 ]
 
 function AnalyzeLoadingSkeleton() {
@@ -76,7 +76,7 @@ function StagedLoadingMessage({ message, step }) {
     <div className="rounded-xl border border-indigo-100 bg-indigo-50 p-4 dark:border-indigo-500/20 dark:bg-indigo-500/10">
       <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-indigo-600 dark:text-indigo-300">
         <span className="inline-block h-2 w-2 rounded-full bg-[#6366F1]" />
-        Analiz Suruyor
+        Analiz Sürüyor
       </div>
       <p className="mt-2 text-sm font-semibold text-indigo-900 dark:text-indigo-200">{message}</p>
       <p className="mt-1 text-xs text-indigo-700 dark:text-indigo-300">
@@ -122,8 +122,8 @@ function AnalyzePage() {
     const trimmedCodeSnippet = codeSnippet.trim()
 
     if (!trimmedErrorMessage) {
-      setErrorText('Lutfen once bir hata mesaji girin.')
-      toast.error('Hata mesaji girin.')
+      setErrorText('Lütfen önce bir hata mesajı girin.')
+      toast.error('Hata mesajı girin.')
       return
     }
 
@@ -135,11 +135,11 @@ function AnalyzePage() {
         codeSnippet: trimmedCodeSnippet || undefined,
       })
       setAnalysisResult(result)
-      toast.success('Analiz tamamlandi.')
+      toast.success('Analiz tamamlandı.')
     } catch (error) {
-      const message = error?.message || 'Analiz yapilirken bir sorun olustu. Lutfen tekrar deneyin.'
+      const message = error?.message || 'Analiz yapılırken bir sorun oluştu. Lütfen tekrar deneyin.'
       setErrorText(message)
-      toast.error('Bir hata olustu, lütfen tekrar deneyin.')
+      toast.error('Bir hata oluştu, lütfen tekrar deneyin.')
     } finally {
       setIsLoading(false)
     }
@@ -155,11 +155,11 @@ function AnalyzePage() {
     <section className="space-y-5 sm:space-y-6">
       <header className="space-y-2">
         <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#6366F1]">
-          Analyze
+          Analiz
         </p>
         <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl dark:text-slate-100">Hata Analizi</h2>
         <p className="max-w-2xl text-sm leading-6 text-slate-500 dark:text-slate-400">
-          Ingilizce hata mesajini gir, istersen ilgili kodu ekle. Sistem bu veriyi backend analiz servisine gonderir ve sonucu Turkce olarak gosterir.
+          İngilizce hata mesajını gir, istersen ilgili kodu ekle. Sistem bu veriyi backend analiz servisine gönderir ve sonucu Türkçe olarak gösterir.
         </p>
       </header>
 
@@ -168,27 +168,27 @@ function AnalyzePage() {
       <form onSubmit={handleSubmit} className="space-y-4 rounded-xl border border-slate-200 bg-white p-4 sm:p-5 dark:border-slate-800 dark:bg-slate-900">
         <div className="space-y-1">
           <label htmlFor="errorMessage" className="text-sm font-semibold text-slate-900 dark:text-slate-100">
-            Hata Mesaji <span className="text-red-500">*</span>
+            Hata Mesajı <span className="text-red-500">*</span>
           </label>
           <textarea
             id="errorMessage"
             value={errorMessage}
             onChange={(event) => setErrorMessage(event.target.value)}
             className="min-h-28 w-full rounded-xl border border-slate-200 bg-slate-50/40 px-3 py-2.5 text-sm text-slate-800 outline-none placeholder:text-slate-400 transition focus:border-[#6366F1]/40 focus:bg-white focus:ring-4 focus:ring-[#6366F1]/20 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus:bg-slate-800"
-            placeholder="Ornek: Cannot read properties of undefined (reading 'map')"
+            placeholder="Örnek: Cannot read properties of undefined (reading 'map')"
           />
         </div>
 
         <div className="space-y-1">
           <label htmlFor="codeSnippet" className="text-sm font-semibold text-slate-900 dark:text-slate-100">
-            Kod Parcasi <span className="text-slate-400 font-medium">(opsiyonel)</span>
+            Kod Parçası <span className="text-slate-400 font-medium">(isteğe bağlı)</span>
           </label>
           <textarea
             id="codeSnippet"
             value={codeSnippet}
             onChange={(event) => setCodeSnippet(event.target.value)}
             className="min-h-36 w-full rounded-xl border border-slate-200 bg-slate-50/40 px-3 py-2.5 font-mono text-sm text-slate-800 outline-none placeholder:text-slate-400 transition focus:border-[#6366F1]/40 focus:bg-white focus:ring-4 focus:ring-[#6366F1]/20 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus:bg-slate-800"
-            placeholder="Ornek kodu buraya ekleyebilirsin..."
+            placeholder="Örnek kodu buraya ekleyebilirsin..."
           />
         </div>
 
@@ -213,16 +213,16 @@ function AnalyzePage() {
 
       {!isLoading && errorText && (
         <div className="rounded-xl border border-red-200 bg-red-50 p-4 dark:border-red-500/20 dark:bg-red-500/10">
-          <p className="text-sm font-semibold text-red-900 dark:text-red-300">Analiz su anda olusturulamadi</p>
+          <p className="text-sm font-semibold text-red-900 dark:text-red-300">Analiz şu anda oluşturulamadı</p>
           <p className="mt-1 text-sm text-red-800 dark:text-red-200">{errorText}</p>
         </div>
       )}
 
       {!isLoading && !errorText && !analysisResult && (
         <div className="rounded-xl border border-dashed border-slate-300 bg-slate-50 p-6 dark:border-slate-700 dark:bg-slate-900">
-          <p className="text-sm font-semibold text-slate-800 dark:text-slate-100">Analiz sonucu burada gosterilecek</p>
+          <p className="text-sm font-semibold text-slate-800 dark:text-slate-100">Analiz sonucu burada gösterilecek</p>
           <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
-            Baslamak icin once hata mesaji gir. Istersen kod parcasini da ekleyip "Analiz Et" butonuna basabilirsin.
+            Başlamak için önce hata mesajı gir. İstersen kod parçasını da ekleyip "Analiz Et" butonuna basabilirsin.
           </p>
         </div>
       )}

@@ -5,7 +5,7 @@ export async function getHistoryList() {
   const result = await response.json()
 
   if (!response.ok) {
-    throw new Error(result.error || 'Gecmis kayitlari alinamadi.')
+    throw new Error(result.error || 'Geçmiş kayıtları alınamadı.')
   }
 
   return result.data
@@ -16,7 +16,7 @@ export async function getHistoryDetail(id) {
   const result = await response.json()
 
   if (!response.ok) {
-    throw new Error(result.error || 'Kayit detayi alinamadi.')
+    throw new Error(result.error || 'Kayıt detayı alınamadı.')
   }
 
   return result.data
@@ -29,7 +29,7 @@ export async function deleteHistory(id) {
   const result = await response.json()
 
   if (!response.ok) {
-    throw new Error(result.error || 'Kayit silinemedi.')
+    throw new Error(result.error || 'Kayıt silinemedi.')
   }
 
   return result.data
@@ -47,7 +47,7 @@ export async function sendHistoryFeedback(id, feedbackType) {
   const result = await response.json()
 
   if (!response.ok) {
-    throw new Error(result.error || 'Geri bildirim gonderilemedi.')
+    throw new Error(result.error || 'Geri bildirim gönderilemedi.')
   }
 
   return result.data

@@ -41,7 +41,7 @@ function loadEnvConfig() {
   }
 
   if (errors.length > 0) {
-    throw new Error(`[env] Konfigurasyon hatasi:\n- ${errors.join('\n- ')}`)
+    throw new Error(`[env] Yapılandırma hatası:\n- ${errors.join('\n- ')}`)
   }
 
   return {

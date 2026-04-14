@@ -4,35 +4,35 @@ import { oneDark, oneLight } from 'react-syntax-highlighter/dist/esm/styles/pris
 
 const featureCards = [
   {
-    title: 'Turkce sade aciklama',
-    description: 'Karisik hata metinlerini anlasilir ve net bir dile cevirir.',
+    title: 'Türkçe sade açıklama',
+    description: 'Karmaşık hata metinlerini anlaşılır ve net bir dile çevirir.',
   },
   {
     title: 'Muhtemel nedenler',
-    description: 'Sorunun olasi kaynaklarini oncelik sirasiyla listeler.',
+    description: 'Sorunun olası kaynaklarını öncelik sırasıyla listeler.',
   },
   {
-    title: 'Adim adim cozum',
-    description: 'Dogrudan uygulanabilir adimlarla nasil ilerleyecegini gosterir.',
+    title: 'Adım adım çözüm',
+    description: 'Doğrudan uygulanabilir adımlarla nasıl ilerleyeceğini gösterir.',
   },
   {
-    title: 'Ornek duzeltilmis kod',
-    description: 'Uygulanabilir bir kod ornegi ile cozum yolunu somutlastirir.',
+    title: 'Örnek düzeltilmiş kod',
+    description: 'Uygulanabilir bir kod örneği ile çözüm yolunu somutlaştırır.',
   },
 ]
 
 const howItWorks = [
   {
-    title: 'Hatani Yapistir',
-    description: 'Konsoldaki Ingilizce hata mesajini ve istersen kodunu ekle.',
+    title: 'Hatanı Yapıştır',
+    description: 'Konsoldaki İngilizce hata mesajını ve istersen kodunu ekle.',
   },
   {
-    title: 'Aninda Analiz',
-    description: 'Fixora hatayi kategorize eder ve baglamiyla birlikte yorumlar.',
+    title: 'Anında Analiz',
+    description: 'Fixora hatayı kategorize eder ve bağlamıyla birlikte yorumlar.',
   },
   {
-    title: 'Cozume Ulas',
-    description: 'Muhtemel nedenleri, cozum adimlarini ve ornek kodu incele.',
+    title: 'Çözüme Ulaş',
+    description: 'Muhtemel nedenleri, çözüm adımlarını ve örnek kodu incele.',
   },
 ]
 
@@ -48,11 +48,11 @@ function HomePage() {
 
         <div className="space-y-4">
           <h1 className="max-w-5xl text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl dark:text-slate-100 md:text-5xl lg:text-6xl">
-            Ingilizce hata mesajlarini, uygulanabilir Turkce cozumlere donustur.
+            İngilizce hata mesajlarını, uygulanabilir Türkçe çözümlere dönüştür.
           </h1>
           <p className="max-w-3xl text-sm leading-7 text-slate-600 sm:text-base dark:text-slate-400">
-            Fixora, gordugun hatanin ne anlama geldigini saniyeler icinde aciklar. Muhtemel nedenleri,
-            adim adim cozum onerisini ve ornek duzeltilmis kodu tek ekranda sunar.
+            Fixora, gördüğün hatanın ne anlama geldiğini saniyeler içinde açıklar. Muhtemel nedenleri,
+            adım adım çözüm önerisini ve örnek düzeltilmiş kodu tek ekranda sunar.
           </p>
         </div>
 
@@ -67,18 +67,18 @@ function HomePage() {
             to="/history"
             className="inline-flex min-h-11 items-center justify-center rounded-lg border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-[#6366F1]/35 hover:text-[#6366F1] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6366F1]/35 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:border-indigo-400/40 dark:hover:text-indigo-300"
           >
-            Gecmisi Goruntule
+            Geçmişi Görüntüle
           </Link>
         </div>
 
         <div className="flex flex-wrap items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
-          <span className="rounded-md bg-slate-100 px-2 py-1 dark:bg-slate-800">Gelistiriciler icin uretildi</span>
-          <span className="rounded-md bg-slate-100 px-2 py-1 dark:bg-slate-800">Acik kaynak yaklasimiyla gelistiriliyor</span>
+          <span className="rounded-md bg-slate-100 px-2 py-1 dark:bg-slate-800">Geliştiriciler için üretildi</span>
+          <span className="rounded-md bg-slate-100 px-2 py-1 dark:bg-slate-800">Açık kaynak yaklaşımıyla geliştiriliyor</span>
         </div>
       </header>
 
       <section className="space-y-5">
-        <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Nasil Calisir?</h2>
+        <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Nasıl Çalışır?</h2>
         <div className="grid gap-4 md:grid-cols-3">
           {howItWorks.map((item, index) => (
             <article key={item.title} className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
@@ -93,7 +93,7 @@ function HomePage() {
       </section>
 
       <section className="space-y-5">
-        <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">One Cikan Ozellikler</h2>
+        <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Öne Çıkan Özellikler</h2>
         <div className="grid gap-4 sm:grid-cols-2">
           {featureCards.map((feature) => (
             <article key={feature.title} className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
@@ -108,13 +108,13 @@ function HomePage() {
         <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Mini Demo</h2>
         <div className="grid min-w-0 gap-4 lg:grid-cols-2">
           <article className="min-w-0 rounded-xl border border-slate-200 bg-white p-4 sm:p-5 dark:border-slate-800 dark:bg-slate-900">
-            <p className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Input</p>
-            <h3 className="mt-2 text-sm font-semibold text-slate-900 dark:text-slate-100">Ornek Hata Mesaji</h3>
+            <p className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Girdi</p>
+            <h3 className="mt-2 text-sm font-semibold text-slate-900 dark:text-slate-100">Örnek Hata Mesajı</h3>
             <div className="mt-3 rounded-lg border border-slate-200 bg-slate-50 p-2.5 text-sm wrap-break-word text-slate-700 sm:p-3 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200">
               Uncaught TypeError: Cannot read properties of undefined (reading 'map')
             </div>
 
-            <h3 className="mt-4 text-sm font-semibold text-slate-900 dark:text-slate-100">Probleme Neden Olan Kod</h3>
+            <h3 className="mt-4 text-sm font-semibold text-slate-900 dark:text-slate-100">Soruna Neden Olan Kod</h3>
             <div className="mt-2 overflow-x-auto rounded-lg border border-slate-200 dark:border-slate-700">
               <div className="min-w-0 dark:hidden">
                 <SyntaxHighlighter
@@ -140,28 +140,28 @@ function HomePage() {
           </article>
 
           <article className="min-w-0 rounded-xl border border-slate-200 bg-white p-4 sm:p-5 dark:border-slate-800 dark:bg-slate-900">
-            <p className="text-xs font-semibold uppercase tracking-wide text-[#6366F1]">Fixora Output</p>
+            <p className="text-xs font-semibold uppercase tracking-wide text-[#6366F1]">Fixora Çıktısı</p>
             <div className="mt-3 space-y-3">
               <div className="rounded-lg bg-slate-50 p-3 dark:bg-slate-800">
-                <p className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Kisa Ozet</p>
+                <p className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Kısa Özet</p>
                 <p className="mt-1 text-sm text-slate-700 dark:text-slate-300">
-                  users degiskeni beklenen anda dizi degil veya tanimsiz oldugu icin map cagrisi hata veriyor.
+                  users değişkeni beklenen anda dizi değil veya tanımsız olduğu için map çağrısı hata veriyor.
                 </p>
               </div>
 
               <div className="rounded-lg bg-slate-50 p-3 dark:bg-slate-800">
                 <p className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Muhtemel Nedenler</p>
                 <ul className="mt-2 space-y-1 text-sm text-slate-700 dark:text-slate-300">
-                  <li>• API cevabi beklenenden gec geliyor.</li>
-                  <li>• users state ilk renderda undefined olabilir.</li>
+                  <li>• API cevabı beklenenden geç geliyor.</li>
+                  <li>• users state ilk render’da undefined olabilir.</li>
                 </ul>
               </div>
 
               <div className="rounded-lg bg-slate-50 p-3 dark:bg-slate-800">
-                <p className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Cozum</p>
+                <p className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Çözüm</p>
                 <ol className="mt-2 space-y-1 text-sm text-slate-700 dark:text-slate-300">
-                  <li>1. users icin baslangic degeri olarak bos dizi kullan.</li>
-                  <li>2. map cagrisi oncesi Array.isArray(users) kontrolu ekle.</li>
+                  <li>1. users için başlangıç değeri olarak boş dizi kullan.</li>
+                  <li>2. map çağrısı öncesi Array.isArray(users) kontrolü ekle.</li>
                 </ol>
               </div>
             </div>
@@ -172,8 +172,8 @@ function HomePage() {
       <section className="rounded-2xl border border-indigo-200 bg-linear-to-r from-indigo-50 to-white p-6 dark:border-indigo-500/30 dark:from-indigo-500/10 dark:to-slate-900">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h2 className="text-xl font-bold text-slate-900 sm:text-2xl dark:text-slate-100">Hemen Basla</h2>
-            <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">Ilk hatani simdi analiz et ve cozum yolunu netlestir.</p>
+            <h2 className="text-xl font-bold text-slate-900 sm:text-2xl dark:text-slate-100">Hemen Başla</h2>
+            <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">İlk hatanı şimdi analiz et ve çözüm yolunu netleştir.</p>
           </div>
           <Link
             to="/analyze"

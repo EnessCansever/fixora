@@ -12,7 +12,7 @@ export async function analyzeErrorMessage(payload) {
   const result = await response.json()
 
   if (!response.ok) {
-    throw new Error(result.error || 'Analiz istegi basarisiz oldu.')
+    throw new Error(result.error || 'Analiz isteği başarısız oldu.')
   }
 
   return result.data

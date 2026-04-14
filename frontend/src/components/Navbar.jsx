@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom'
 const links = [
   { to: '/', label: 'Ana Sayfa' },
   { to: '/analyze', label: 'Analiz' },
-  { to: '/history', label: 'Gecmis' },
+  { to: '/history', label: 'Geçmiş' },
 ]
 
 const THEME_KEY = 'fixora-theme'
@@ -38,7 +38,7 @@ function Navbar() {
         <div className="flex items-center justify-between gap-3">
           <div className="min-w-0">
           <h1 className="text-xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100 sm:text-2xl">Fixora</h1>
-          <p className="text-xs text-slate-500 dark:text-slate-400">Simple error analysis demo</p>
+          <p className="text-xs text-slate-500 dark:text-slate-400">Basit hata analizi demosu</p>
         </div>
 
         <div className="hidden items-center gap-2 md:flex">
@@ -80,7 +80,7 @@ function Navbar() {
             type="button"
             onClick={toggleTheme}
             className="inline-flex min-h-10 min-w-10 items-center justify-center rounded-md border border-slate-200 bg-white text-slate-700 transition hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6366F1]/35 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
-            aria-label="Tema degistir"
+            aria-label="Temayı değiştir"
           >
             {isDarkMode ? <SunIcon className="h-5 w-5" /> : <MoonIcon className="h-5 w-5" />}
           </button>
@@ -89,7 +89,7 @@ function Navbar() {
             onClick={() => setIsMobileMenuOpen((prev) => !prev)}
             className="inline-flex min-h-10 min-w-10 items-center justify-center rounded-md border border-slate-200 bg-white text-slate-700 transition hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6366F1]/35 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
             aria-expanded={isMobileMenuOpen}
-            aria-label="Mobil menu"
+            aria-label="Mobil menü"
           >
             {isMobileMenuOpen ? <XMarkIcon className="h-5 w-5" /> : <Bars3Icon className="h-5 w-5" />}
           </button>

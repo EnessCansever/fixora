@@ -10,6 +10,20 @@ function formatDate(value) {
   }
 }
 
+const categoryLabels = {
+  'Type Error': 'Tip Hatası',
+  'Reference Error': 'Referans Hatası',
+  'Syntax Error': 'Sözdizimi Hatası',
+  'React Error': 'React Hatası',
+  'API / Network Error': 'API / Ağ Hatası',
+  'Build Tool Error': 'Build Aracı Hatası',
+  Unknown: 'Bilinmeyen',
+}
+
+function getCategoryLabel(category) {
+  return categoryLabels[category] || category
+}
+
 function HistoryPage() {
   const [historyItems, setHistoryItems] = useState([])
   const [selectedId, setSelectedId] = useState('')
@@ -93,7 +107,7 @@ function HistoryPage() {
         }
       }
     } catch (error) {
-      const message = error.message || 'Kayit silinemedi.'
+      const message = error.message || 'Kayıt silinemedi.'
       setListError(message)
       toast.error('Kayıt silinemedi.')
     } finally {
@@ -105,11 +119,11 @@ function HistoryPage() {
     <section className="space-y-5 sm:space-y-6">
       <header className="space-y-2">
         <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#6366F1]">
-          History
+          Geçmiş
         </p>
-        <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl dark:text-slate-100">Analiz Gecmisi</h2>
+        <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl dark:text-slate-100">Analiz Geçmişi</h2>
         <p className="max-w-2xl text-sm leading-6 text-slate-500 dark:text-slate-400">
-          Son analizleri listeden secerek detaylarini gorebilirsin.
+          Son analizleri listeden seçerek detaylarını görebilirsin.
         </p>
       </header>
 
@@ -129,15 +143,15 @@ function HistoryPage() {
         <section className="min-w-0 rounded-xl border border-slate-200 bg-white p-3 sm:p-4 dark:border-slate-800 dark:bg-slate-900">
           <div className="flex items-center justify-between gap-3">
             <h3 className="text-base font-semibold text-slate-900 dark:text-slate-100">Son Analizler</h3>
-            <span className="text-xs text-slate-500 dark:text-slate-400">{historyItems.length} kayit</span>
+            <span className="text-xs text-slate-500 dark:text-slate-400">{historyItems.length} kayıt</span>
           </div>
 
           {isListLoading && (
-            <p className="mt-3 text-sm text-slate-600 dark:text-slate-400">Gecmis yukleniyor...</p>
+            <p className="mt-3 text-sm text-slate-600 dark:text-slate-400">Geçmiş yükleniyor...</p>
           )}
 
           {!isListLoading && historyItems.length === 0 && (
-            <p className="mt-3 text-sm text-slate-600 dark:text-slate-400">Henuz kayitli analiz bulunmuyor.</p>
+            <p className="mt-3 text-sm text-slate-600 dark:text-slate-400">Henüz kayıtlı analiz bulunmuyor.</p>
           )}
 
           {!isListLoading && historyItems.length > 0 && (
@@ -187,33 +201,33 @@ function HistoryPage() {
           <h3 className="text-base font-semibold text-slate-900 dark:text-slate-100">Detay</h3>
 
           {isDetailLoading && (
-            <p className="mt-3 text-sm text-slate-600 dark:text-slate-400">Detay yukleniyor...</p>
+            <p className="mt-3 text-sm text-slate-600 dark:text-slate-400">Detay yükleniyor...</p>
           )}
 
           {!isDetailLoading && !selectedDetail && (
-            <p className="mt-3 text-sm text-slate-600 dark:text-slate-400">Detay gormek icin listeden bir kayit sec.</p>
+            <p className="mt-3 text-sm text-slate-600 dark:text-slate-400">Detay görmek için listeden bir kayıt seç.</p>
           )}
 
           {!isDetailLoading && selectedDetail && (
             <div className="mt-3 space-y-3 text-sm">
               <div>
                 <p className="font-semibold text-slate-900 dark:text-slate-100">Kategori</p>
-                <p className="wrap-break-word text-slate-700 dark:text-slate-300">{selectedDetail.category}</p>
+                <p className="wrap-break-word text-slate-700 dark:text-slate-300">{getCategoryLabel(selectedDetail.category)}</p>
               </div>
 
               <div>
-                <p className="font-semibold text-slate-900 dark:text-slate-100">Kisa Ozet</p>
+                <p className="font-semibold text-slate-900 dark:text-slate-100">Kısa Özet</p>
                 <p className="wrap-break-word text-slate-700 dark:text-slate-300">{selectedDetail.shortSummary}</p>
               </div>
 
               <div>
-                <p className="font-semibold text-slate-900 dark:text-slate-100">Hata Mesaji</p>
+                <p className="font-semibold text-slate-900 dark:text-slate-100">Hata Mesajı</p>
                 <p className="wrap-break-word text-slate-700 dark:text-slate-300">{selectedDetail.errorMessage}</p>
               </div>
 
               {selectedDetail.codeSnippet && (
                 <div>
-                  <p className="font-semibold text-slate-900 dark:text-slate-100">Kod Parcasi</p>
+                  <p className="font-semibold text-slate-900 dark:text-slate-100">Kod Parçası</p>
                   <pre className="mt-1 max-w-full overflow-x-auto rounded-lg bg-slate-900 p-3 text-xs text-slate-100 dark:bg-slate-950">
                     <code>{selectedDetail.codeSnippet}</code>
                   </pre>
@@ -221,7 +235,7 @@ function HistoryPage() {
               )}
 
               <div>
-                <p className="font-semibold text-slate-900 dark:text-slate-100">Olusturma Zamani</p>
+                <p className="font-semibold text-slate-900 dark:text-slate-100">Oluşturma Zamanı</p>
                 <p className="wrap-break-word text-slate-700 dark:text-slate-300">{formatDate(selectedDetail.createdAt)}</p>
               </div>
             </div>

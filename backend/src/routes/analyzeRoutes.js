@@ -12,7 +12,7 @@ const validateAnalyzeRequest = (req, res, next) => {
   if (!errorMessage) {
     return res.status(400).json({
       success: false,
-      error: 'errorMessage alanı gerekli.',
+      error: 'Hata mesajı alanı gerekli.',
     })
   }
 
@@ -20,7 +20,7 @@ const validateAnalyzeRequest = (req, res, next) => {
   if (typeof errorMessage !== 'string') {
     return res.status(400).json({
       success: false,
-      error: 'errorMessage bir string olmalı.',
+      error: 'Hata mesajı bir metin olmalı.',
     })
   }
 
@@ -28,7 +28,7 @@ const validateAnalyzeRequest = (req, res, next) => {
   if (errorMessage.trim().length === 0) {
     return res.status(400).json({
       success: false,
-      error: 'errorMessage boş bırakılamaz.',
+      error: 'Hata mesajı boş bırakılamaz.',
     })
   }
 
@@ -36,7 +36,7 @@ const validateAnalyzeRequest = (req, res, next) => {
   if (errorMessage.length > 5000) {
     return res.status(400).json({
       success: false,
-      error: 'Hata mesajı çok uzun (max 5000 karakter).',
+      error: 'Hata mesajı çok uzun (en fazla 5000 karakter).',
     })
   }
 

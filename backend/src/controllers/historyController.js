@@ -13,7 +13,7 @@ async function getHistory(req, res) {
   } catch (error) {
     res.status(500).json({
       success: false,
-      error: 'Gecmis kayitlari getirilemedi.',
+      error: 'Geçmiş kayıtları getirilemedi.',
     })
   }
 }
@@ -25,7 +25,7 @@ async function getHistoryById(req, res) {
     if (!item) {
       return res.status(404).json({
         success: false,
-        error: 'Gecmis kaydi bulunamadi.',
+        error: 'Geçmiş kaydı bulunamadı.',
       })
     }
 
@@ -48,18 +48,18 @@ async function deleteHistoryById(req, res) {
     if (!deletedItem) {
       return res.status(404).json({
         success: false,
-        error: 'Silinecek gecmis kaydi bulunamadi.',
+        error: 'Silinecek geçmiş kaydı bulunamadı.',
       })
     }
 
     res.json({
       success: true,
-      message: 'Gecmis kaydi silindi.',
+      message: 'Geçmiş kaydı silindi.',
     })
   } catch (error) {
     res.status(500).json({
       success: false,
-      error: 'Gecmis kaydi silinemedi.',
+      error: 'Geçmiş kaydı silinemedi.',
     })
   }
 }
@@ -87,7 +87,7 @@ async function submitHistoryFeedback(req, res) {
     if (!updatedItem) {
       return res.status(404).json({
         success: false,
-        error: 'Gecmis kaydi bulunamadi.',
+        error: 'Geçmiş kaydı bulunamadı.',
       })
     }
 
@@ -102,7 +102,7 @@ async function submitHistoryFeedback(req, res) {
   } catch (error) {
     return res.status(500).json({
       success: false,
-      error: 'Geri bildirim guncellenemedi.',
+      error: 'Geri bildirim güncellenemedi.',
     })
   }
 }

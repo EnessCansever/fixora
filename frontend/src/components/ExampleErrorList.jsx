@@ -1,26 +1,26 @@
 const EXAMPLE_ERRORS = [
   {
-    title: 'Type Error - map',
+    title: 'Tip Hatası - map',
     errorMessage: "Cannot read properties of undefined (reading 'map')",
     codeSnippet: "const items = data.items\nconst names = items.map((item) => item.name)",
   },
   {
-    title: 'Type Error - function',
+    title: 'Tip Hatası - fonksiyon',
     errorMessage: 'items.filter is not a function',
     codeSnippet: "const items = 'hello'\nconst result = items.filter(Boolean)",
   },
   {
-    title: 'Reference Error',
+    title: 'Referans Hatası',
     errorMessage: 'myVar is not defined',
     codeSnippet: 'console.log(myVar)',
   },
   {
-    title: 'React Hydration',
+    title: 'React hydration hatası',
     errorMessage: 'Hydration failed because the initial UI does not match what was rendered on the server',
     codeSnippet: '<div>{new Date().toLocaleString()}</div>',
   },
   {
-    title: 'Network Error',
+    title: 'Ağ Hatası',
     errorMessage: 'Failed to fetch',
     codeSnippet: "fetch('/api/users').then((res) => res.json())",
   },
@@ -29,9 +29,9 @@ const EXAMPLE_ERRORS = [
 function ExampleErrorList({ onSelect }) {
   return (
     <section className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
-      <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100">Hizli Test Ornekleri</h3>
+      <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100">Hızlı Test Örnekleri</h3>
       <p className="mt-1 text-sm leading-6 text-slate-500 dark:text-slate-400">
-        Asagidaki orneklerden birine tiklayarak hata mesaji ve kod alanlarini hizlica doldurabilirsin.
+        Aşağıdaki örneklerden birine tıklayarak hata mesajı ve kod alanlarını hızlıca doldurabilirsin.
       </p>
       <div className="mt-3 grid gap-2 sm:gap-3 md:grid-cols-2">
         {EXAMPLE_ERRORS.map((item) => (
