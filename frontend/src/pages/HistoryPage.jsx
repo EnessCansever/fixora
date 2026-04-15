@@ -65,27 +65,42 @@ function HistoryPage() {
   }, [fetchHistory])
 
   useEffect(() => {
+    let isCancelled = false
+
     async function fetchDetail() {
       if (!selectedId) {
         setSelectedDetail(null)
+        setDetailError('')
+        setIsDetailLoading(false)
         return
       }
 
       setIsDetailLoading(true)
-      setSelectedDetail(null)
       setDetailError('')
 
       try {
         const detail = await getHistoryDetail(selectedId)
+        if (isCancelled) {
+          return
+        }
         setSelectedDetail(detail)
       } catch (error) {
-        setDetailError(error.message)
+        if (isCancelled) {
+          return
+        }
+        setDetailError(error?.message || 'Kayıt detayı alınamadı.')
       } finally {
-        setIsDetailLoading(false)
+        if (!isCancelled) {
+          setIsDetailLoading(false)
+        }
       }
     }
 
     fetchDetail()
+
+    return () => {
+      isCancelled = true
+    }
   }, [selectedId])
 
   const handleDelete = async (itemId) => {
@@ -217,14 +232,16 @@ function HistoryPage() {
           <h3 className="text-base font-semibold text-slate-900 dark:text-slate-100">Detay</h3>
 
           {isDetailLoading && (
-            <p className="mt-3 text-sm text-slate-600 dark:text-slate-400">Detay yükleniyor...</p>
+            <p className="mt-3 text-sm text-slate-600 dark:text-slate-400">
+              {selectedDetail ? 'Yeni detay yükleniyor...' : 'Detay yükleniyor...'}
+            </p>
           )}
 
           {!isDetailLoading && !selectedDetail && (
             <p className="mt-3 text-sm text-slate-600 dark:text-slate-400">Detay görmek için listeden bir kayıt seç.</p>
           )}
 
-          {!isDetailLoading && selectedDetail && (
+          {selectedDetail && (
             <div className="mt-3 space-y-3 text-sm">
               <div>
                 <p className="font-semibold text-slate-900 dark:text-slate-100">Kategori</p>
