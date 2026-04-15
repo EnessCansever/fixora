@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { deleteHistory, getHistoryDetail, getHistoryList } from '../services/historyApi'
 
@@ -34,27 +34,35 @@ function HistoryPage() {
   const [listError, setListError] = useState('')
   const [detailError, setDetailError] = useState('')
 
-  useEffect(() => {
-    async function fetchHistory() {
-      setIsListLoading(true)
-      setListError('')
+  const fetchHistory = useCallback(async () => {
+    setIsListLoading(true)
+    setListError('')
 
-      try {
-        const data = await getHistoryList()
-        setHistoryItems(data)
+    try {
+      const data = await getHistoryList()
+      setHistoryItems(data)
 
-        if (data.length > 0) {
-          setSelectedId(data[0]._id)
-        }
-      } catch (error) {
-        setListError(error.message)
-      } finally {
-        setIsListLoading(false)
+      if (data.length === 0) {
+        setSelectedId('')
+        setSelectedDetail(null)
+        return
       }
-    }
 
-    fetchHistory()
+      setSelectedId((prevSelectedId) => {
+        const hasPreviousSelection = data.some((item) => item._id === prevSelectedId)
+        return hasPreviousSelection ? prevSelectedId : data[0]._id
+      })
+    } catch (error) {
+      const message = error?.message || 'Geçmiş kayıtları alınamadı.'
+      setListError(message)
+    } finally {
+      setIsListLoading(false)
+    }
   }, [])
+
+  useEffect(() => {
+    fetchHistory()
+  }, [fetchHistory])
 
   useEffect(() => {
     async function fetchDetail() {
@@ -128,8 +136,16 @@ function HistoryPage() {
       </header>
 
       {listError && (
-        <div className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-800 dark:border-red-500/20 dark:bg-red-500/10 dark:text-red-200">
-          {listError}
+        <div className="flex flex-col gap-3 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-800 dark:border-red-500/20 dark:bg-red-500/10 dark:text-red-200 sm:flex-row sm:items-center sm:justify-between">
+          <p>{listError}</p>
+          <button
+            type="button"
+            onClick={fetchHistory}
+            disabled={isListLoading}
+            className="inline-flex min-h-10 items-center justify-center rounded-md border border-red-300 bg-white px-3 py-2 text-xs font-semibold text-red-700 transition hover:bg-red-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-300/60 disabled:cursor-not-allowed disabled:opacity-60 dark:border-red-400/40 dark:bg-red-500/10 dark:text-red-200 dark:hover:bg-red-500/20"
+          >
+            {isListLoading ? 'Yenileniyor...' : 'Tekrar dene'}
+          </button>
         </div>
       )}
 
