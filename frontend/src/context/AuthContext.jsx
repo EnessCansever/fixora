@@ -1,14 +1,30 @@
 import { createContext, useState, useEffect, useCallback, useContext } from 'react'
-import { registerUser, loginUser, getCurrentUser } from '../services/authApi'
+import {
+  registerUser,
+  loginUser,
+  getCurrentUser,
+  AUTH_TOKEN_KEY,
+  SESSION_EXPIRED_MESSAGE,
+  subscribeUnauthorized,
+} from '../services/authApi'
 
 const AuthContext = createContext(null)
-
-const AUTH_TOKEN_KEY = 'fixora_auth_token'
+const AUTH_NOTICE_KEY = 'fixora_auth_notice'
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
   const [token, setToken] = useState(null)
   const [isAuthLoading, setIsAuthLoading] = useState(true)
+
+  const clearAuthState = useCallback((noticeMessage = '') => {
+    localStorage.removeItem(AUTH_TOKEN_KEY)
+    setToken(null)
+    setUser(null)
+
+    if (noticeMessage && typeof sessionStorage !== 'undefined') {
+      sessionStorage.setItem(AUTH_NOTICE_KEY, noticeMessage)
+    }
+  }, [])
 
   useEffect(() => {
     const initializeAuth = async () => {
@@ -20,9 +36,7 @@ export function AuthProvider({ children }) {
           setToken(storedToken)
           setUser(userData.user)
         } catch {
-          localStorage.removeItem(AUTH_TOKEN_KEY)
-          setToken(null)
-          setUser(null)
+          clearAuthState()
         }
       }
 
@@ -30,7 +44,15 @@ export function AuthProvider({ children }) {
     }
 
     initializeAuth()
-  }, [])
+  }, [clearAuthState])
+
+  useEffect(() => {
+    const unsubscribe = subscribeUnauthorized((message) => {
+      clearAuthState(message || SESSION_EXPIRED_MESSAGE)
+    })
+
+    return unsubscribe
+  }, [clearAuthState])
 
   const register = useCallback(async (name, email, password) => {
     const data = await registerUser(name, email, password)
@@ -57,10 +79,8 @@ export function AuthProvider({ children }) {
   }, [])
 
   const logout = useCallback(() => {
-    localStorage.removeItem(AUTH_TOKEN_KEY)
-    setToken(null)
-    setUser(null)
-  }, [])
+    clearAuthState()
+  }, [clearAuthState])
 
   const isAuthenticated = !!token && !!user
 

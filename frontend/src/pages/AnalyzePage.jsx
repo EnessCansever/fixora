@@ -139,7 +139,7 @@ function AnalyzePage() {
     } catch (error) {
       const message = error?.message || 'Analiz yapılırken bir sorun oluştu. Lütfen tekrar deneyin.'
       setErrorText(message)
-      toast.error('Bir hata oluştu, lütfen tekrar deneyin.')
+      toast.error(message)
     } finally {
       setIsLoading(false)
     }

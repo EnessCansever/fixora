@@ -2,6 +2,65 @@ import { buildApiUrl } from './apiConfig'
 
 const NETWORK_ERROR_MESSAGE = 'Sunucuya ulaşılamadı. İnternet bağlantınızı veya ağ erişimini kontrol edin.'
 const INVALID_RESPONSE_MESSAGE = 'Sunucudan geçersiz bir yanıt alındı.'
+const UNAUTHORIZED_EVENT_NAME = 'fixora:unauthorized'
+
+export const AUTH_TOKEN_KEY = 'fixora_auth_token'
+export const SESSION_EXPIRED_MESSAGE = 'Oturumunuzun süresi doldu. Lütfen tekrar giriş yapın.'
+
+class ApiError extends Error {
+  constructor(message, { status, isAuthError = false } = {}) {
+    super(message)
+    this.name = 'ApiError'
+    this.status = status
+    this.isAuthError = isAuthError
+  }
+}
+
+function emitUnauthorized(message) {
+  if (typeof window === 'undefined') {
+    return
+  }
+
+  window.dispatchEvent(
+    new CustomEvent(UNAUTHORIZED_EVENT_NAME, {
+      detail: {
+        message,
+      },
+    }),
+  )
+}
+
+export function subscribeUnauthorized(handler) {
+  if (typeof window === 'undefined') {
+    return () => {}
+  }
+
+  const listener = (event) => {
+    handler(event?.detail?.message)
+  }
+
+  window.addEventListener(UNAUTHORIZED_EVENT_NAME, listener)
+
+  return () => {
+    window.removeEventListener(UNAUTHORIZED_EVENT_NAME, listener)
+  }
+}
+
+export function getAuthHeaders() {
+  const token = localStorage.getItem(AUTH_TOKEN_KEY)
+
+  if (!token) {
+    return {}
+  }
+
+  return {
+    Authorization: `Bearer ${token}`,
+  }
+}
+
+export function isAuthError(error) {
+  return error instanceof ApiError && error.isAuthError === true
+}
 
 async function parseResponseBody(response) {
   const rawBody = await response.text()
@@ -33,23 +92,46 @@ function getErrorMessageFromBody(body, fallbackMessage) {
   return fallbackMessage
 }
 
-async function requestJson(url, options, fallbackMessage) {
+export async function requestJson(url, options, fallbackMessage, config = {}) {
   let response
+
+  const {
+    authErrorMessage = SESSION_EXPIRED_MESSAGE,
+    emitUnauthorizedEvent = false,
+    treat401AsAuthError = emitUnauthorizedEvent,
+  } = config
 
   try {
     response = await fetch(url, options)
   } catch {
-    throw new Error(NETWORK_ERROR_MESSAGE)
+    throw new ApiError(NETWORK_ERROR_MESSAGE)
   }
 
   const result = await parseResponseBody(response)
 
   if (!response.ok) {
-    throw new Error(getErrorMessageFromBody(result, fallbackMessage))
+    const status = response.status
+
+    if (status === 401 && treat401AsAuthError) {
+      const unauthorizedMessage = authErrorMessage || SESSION_EXPIRED_MESSAGE
+
+      if (emitUnauthorizedEvent) {
+        emitUnauthorized(unauthorizedMessage)
+      }
+
+      throw new ApiError(unauthorizedMessage, {
+        status,
+        isAuthError: true,
+      })
+    }
+
+    throw new ApiError(getErrorMessageFromBody(result, fallbackMessage), {
+      status,
+    })
   }
 
   if (result === null) {
-    throw new Error(INVALID_RESPONSE_MESSAGE)
+    throw new ApiError(INVALID_RESPONSE_MESSAGE)
   }
 
   return result
@@ -97,6 +179,10 @@ export async function getCurrentUser(token) {
       },
     },
     'Kullanıcı bilgisi alınamadı.',
+    {
+      authErrorMessage: SESSION_EXPIRED_MESSAGE,
+      emitUnauthorizedEvent: true,
+    },
   )
 
   return result.data

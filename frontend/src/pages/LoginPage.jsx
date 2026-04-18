@@ -1,7 +1,9 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import { useAuth } from '../context/AuthContext'
+
+const AUTH_NOTICE_KEY = 'fixora_auth_notice'
 
 export default function LoginPage() {
   const navigate = useNavigate()
@@ -11,6 +13,18 @@ export default function LoginPage() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+
+  useEffect(() => {
+    const notice = sessionStorage.getItem(AUTH_NOTICE_KEY)
+
+    if (!notice) {
+      return
+    }
+
+    setError(notice)
+    toast.error(notice)
+    sessionStorage.removeItem(AUTH_NOTICE_KEY)
+  }, [])
 
   const handleSubmit = async (e) => {
     e.preventDefault()

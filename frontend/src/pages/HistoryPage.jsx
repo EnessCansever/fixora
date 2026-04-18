@@ -55,6 +55,9 @@ function HistoryPage() {
     } catch (error) {
       const message = error?.message || 'Geçmiş kayıtları alınamadı.'
       setListError(message)
+      setHistoryItems([])
+      setSelectedId('')
+      setSelectedDetail(null)
     } finally {
       setIsListLoading(false)
     }
@@ -88,6 +91,7 @@ function HistoryPage() {
         if (isCancelled) {
           return
         }
+        setSelectedDetail(null)
         setDetailError(error?.message || 'Kayıt detayı alınamadı.')
       } finally {
         if (!isCancelled) {
@@ -132,7 +136,7 @@ function HistoryPage() {
     } catch (error) {
       const message = error.message || 'Kayıt silinemedi.'
       setListError(message)
-      toast.error('Kayıt silinemedi.')
+      toast.error(message)
     } finally {
       setDeletingId('')
     }

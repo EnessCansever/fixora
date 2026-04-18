@@ -1,72 +1,7 @@
 import { buildApiUrl } from './apiConfig'
+import { getAuthHeaders, requestJson } from './authApi'
 
-const NETWORK_ERROR_MESSAGE = 'Sunucuya ulaşılamadı. İnternet bağlantınızı veya ağ erişimini kontrol edin.'
-const INVALID_RESPONSE_MESSAGE = 'Sunucudan geçersiz bir yanıt alındı.'
-const AUTH_TOKEN_KEY = 'fixora_auth_token'
-
-function getAuthHeaders() {
-  const token = localStorage.getItem(AUTH_TOKEN_KEY)
-
-  if (!token) {
-    return {}
-  }
-
-  return {
-    Authorization: `Bearer ${token}`,
-  }
-}
-
-async function parseResponseBody(response) {
-  const rawBody = await response.text()
-
-  if (!rawBody) {
-    return null
-  }
-
-  try {
-    return JSON.parse(rawBody)
-  } catch {
-    return null
-  }
-}
-
-function getErrorMessageFromBody(body, fallbackMessage) {
-  if (!body || typeof body !== 'object') {
-    return fallbackMessage
-  }
-
-  if (typeof body.error === 'string' && body.error.trim()) {
-    return body.error
-  }
-
-  if (typeof body.message === 'string' && body.message.trim()) {
-    return body.message
-  }
-
-  return fallbackMessage
-}
-
-async function requestJson(url, options, fallbackMessage) {
-  let response
-
-  try {
-    response = await fetch(url, options)
-  } catch {
-    throw new Error(NETWORK_ERROR_MESSAGE)
-  }
-
-  const result = await parseResponseBody(response)
-
-  if (!response.ok) {
-    throw new Error(getErrorMessageFromBody(result, fallbackMessage))
-  }
-
-  if (result === null) {
-    throw new Error(INVALID_RESPONSE_MESSAGE)
-  }
-
-  return result
-}
+const HISTORY_AUTH_ERROR_MESSAGE = 'Oturumunuzun süresi doldu. Geçmişe erişmek için tekrar giriş yapın.'
 
 export async function getHistoryList() {
   const result = await requestJson(
@@ -78,6 +13,10 @@ export async function getHistoryList() {
       },
     },
     'Geçmiş kayıtları alınamadı.',
+    {
+      authErrorMessage: HISTORY_AUTH_ERROR_MESSAGE,
+      emitUnauthorizedEvent: true,
+    },
   )
 
   return result.data
@@ -93,6 +32,10 @@ export async function getHistoryDetail(id) {
       },
     },
     'Kayıt detayı alınamadı.',
+    {
+      authErrorMessage: HISTORY_AUTH_ERROR_MESSAGE,
+      emitUnauthorizedEvent: true,
+    },
   )
 
   return result.data
@@ -108,6 +51,10 @@ export async function deleteHistory(id) {
       },
     },
     'Kayıt silinemedi.',
+    {
+      authErrorMessage: HISTORY_AUTH_ERROR_MESSAGE,
+      emitUnauthorizedEvent: true,
+    },
   )
 
   return result.data
@@ -125,6 +72,10 @@ export async function sendHistoryFeedback(id, feedbackType) {
       body: JSON.stringify({ feedbackType }),
     },
     'Geri bildirim gönderilemedi.',
+    {
+      authErrorMessage: HISTORY_AUTH_ERROR_MESSAGE,
+      emitUnauthorizedEvent: true,
+    },
   )
 
   return result.data
