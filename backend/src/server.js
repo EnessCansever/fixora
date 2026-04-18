@@ -37,7 +37,7 @@ app.use(express.json())
 app.use(requestLogger)
 
 app.get('/', (req, res) => {
-  res.json({ message: 'ErrorInsight backend ayakta.' })
+  res.json({ message: 'Fixora backend ayakta.' })
 })
 
 app.get('/health', (req, res) => {

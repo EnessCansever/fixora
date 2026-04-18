@@ -1,32 +1,37 @@
 # Fixora
 
-Fixora, geliştiricilerin karşılaştığı İngilizce hata mesajlarını saniyeler içinde Türkçe, sade ve uygulanabilir çözümlere dönüştüren yapay zekâ destekli bir araçtır.
+Fixora, İngilizce console ve browser hata mesajlarını Türkçe, sade ve uygulanabilir açıklamalara dönüştüren AI destekli bir web uygulamasıdır. Ürün odağı, hata mesajını hızlıca anlamlandırmak ve kullanıcıya doğrudan işe yarar bir sonraki adımı sunmaktır.
 
-## Proje Tanımı
+Önceki adı `errorinsight` idi; proje artık Fixora adıyla devam ediyor.
 
-Fixora, hata mesajlarını hızlıca anlamlandırmayı zorlaştıran teknik dil sorununu çözmeyi hedefler. Özellikle junior geliştiriciler için, hata metninin ne anlama geldiğini ve nasıl çözüleceğini anlaşılır bir akışta sunar.
+## Canlı Demo
 
-Çalışma akışı basittir:
-1. Kullanıcı hata mesajını ve isterse ilgili kod parçasını girer.
-2. Sistem hatayı analiz eder ve uygun kategoriye yerleştirir.
-3. Türkçe açıklama, muhtemel nedenler, çözüm adımları ve örnek kod çıktısı üretir.
-4. Analiz sonucu geçmişe kaydedilir ve tekrar görüntülenebilir.
+Frontend: https://getfixora.dev
 
-## 🔗 Canlı Demo
+Backend: https://fixora-api-loyo.onrender.com
 
-Yakında: https://fixora.com
+## Ne Problemi Çözüyor
 
-## Özellikler
+Geliştiriciler özellikle React, Node.js, build tool ve API katmanında gelen hata mesajlarını çoğu zaman teknik ve dağınık biçimde görür. Fixora, bu mesajları daha anlaşılır hale getirerek neyin bozulduğunu, neden bozulduğunu ve ne yapılması gerektiğini Türkçe olarak özetler.
 
-- **Hata analizi:** İngilizce hata mesajını teknik bağlamıyla birlikte yorumlar  
-- **Türkçe açıklama:** Hatanın ne anlama geldiğini sade ve anlaşılır biçimde açıklar  
-- **Muhtemel nedenler:** Hatanın oluşmasına yol açabilecek başlıca sebepleri listeler  
-- **Çözüm adımları:** Uygulanabilir, net ve sıralı çözüm önerileri sunar  
-- **Örnek kod:** Düzeltilmiş örnek kod ile çözümü somutlaştırır  
-- **History sistemi:** Analiz sonuçlarını kaydeder ve geçmişten tekrar erişim sağlar  
-- **Rate limiting:** API kötüye kullanımını azaltmak için istek sınırlandırması uygular  
-- **Cache mantığı:** Aynı analiz isteğinde gereksiz AI çağrısını azaltmak için tekrar kullanım kontrolü yapar  
-- **Dark mode UI:** Açık/koyu tema desteğiyle uzun kullanımda daha rahat bir deneyim sunar  
+Bu yaklaşım özellikle şu durumlarda işe yarar:
+- Yeni bir hata mesajının hızlıca anlaşılması gerektiğinde
+- Junior geliştiricilerin çözüm adımlarını daha net görmesi gerektiğinde
+- Geçmiş analizlerin tekrar incelenmesi gerektiğinde
+
+## Temel Özellikler
+
+- İngilizce hata mesajını Türkçe açıklamaya dönüştürür.
+- Muhtemel nedenleri ve çözüm adımlarını ayrı ayrı sunar.
+- Örnek kod parçasını analiz akışına dahil eder.
+- Analiz sonuçlarını history altında saklar.
+- Kullanıcı bazlı history görünümü sağlar.
+- JWT tabanlı auth ile register, login ve logout akışlarını destekler.
+- Session restore ile sayfa yenileme sonrası oturumu geri yükler.
+- Protected route’lar üzerinden `/analyze` ve `/history` erişimini sınırlar.
+- Public-only route’lar ile `/login` ve `/register` sayfalarını ayırır.
+- Network hatası ile auth hatasını ayrı ele alır.
+- Rate limiting ile API kötüye kullanımını sınırlar.
 
 ## Kullanılan Teknolojiler
 
@@ -47,125 +52,123 @@ Yakında: https://fixora.com
 ### AI
 - Google Gemini API
 
-### Database
-- MongoDB
+### Veritabanı
+- MongoDB Atlas
+
+## Çalışma Akışı
+
+1. Kullanıcı hata mesajını ve isterse ilgili kod parçasını girer.
+2. Frontend, isteği JWT ile backend’e gönderir.
+3. Backend, Gemini API üzerinden analiz üretir.
+4. Sonuç Türkçe olarak kullanıcıya gösterilir.
+5. Analiz kaydı history’ye eklenir.
+6. Kullanıcı daha sonra aynı sonucu history ekranından tekrar açabilir.
 
 ## Kurulum
 
-
-### 1) Projeyi klonla
+### 1) Repoyu klonla
 
 ```bash
 git clone <repo-url>
 cd fixora
 ```
 
-### 2) Backend kurulumu
+### 2) Backend bağımlılıklarını yükle
 
 ```bash
 cd backend
 npm install
-npm run dev
 ```
 
-### 3) Frontend kurulumu
+### 3) Frontend bağımlılıklarını yükle
+
+```bash
+cd ../frontend
+npm install
+```
+
+### 4) Uygulamayı çalıştır
+
+Backend ve frontend ayrı terminallerde başlatılır.
+
+```bash
+cd backend
+npm run dev
+```
 
 ```bash
 cd frontend
-npm install
 npm run dev
 ```
 
-## Deployment Configuration
+## Local Environment Ayarları
 
-### Backend env
+Bu repo’da örnek env dosyaları iki ayrı klasörde tutulur:
+- [backend/.env.example](backend/.env.example)
+- [frontend/.env.example](frontend/.env.example)
 
-Gerekli alanlar:
-- `NODE_ENV` (yoksa development kabul edilir)
-- `PORT` (yoksa 5000)
-- `MONGODB_URI` (zorunlu)
-- `GEMINI_API_KEY` (zorunlu)
-- `FRONTEND_ORIGIN` (production ortaminda zorunlu)
-
-Ornek:
+### Backend `.env.example`
 
 ```env
-NODE_ENV=production
-PORT=5000
-MONGODB_URI=mongodb+srv://<user>:<pass>@cluster.mongodb.net/fixora
+NODE_ENV=development
+PORT=3001
+MONGODB_URI=mongodb://127.0.0.1:27017/fixora
 GEMINI_API_KEY=your_gemini_api_key
-FRONTEND_ORIGIN=https://fixora.com,https://www.fixora.com
+GEMINI_MODEL=gemini-2.5-flash
+JWT_SECRET=your_jwt_secret_here
+JWT_EXPIRES_IN=7d
+FRONTEND_ORIGIN=http://localhost:5173
 ```
 
-### Frontend env
-
-Gerekli alan:
-- `VITE_API_BASE_URL`
-
-Ornek:
+### Frontend `.env.example`
 
 ```env
-VITE_API_BASE_URL=https://api.fixora.com/api
+VITE_API_BASE_URL=http://localhost:3001/api
 ```
 
-## Kullanım
+### Local çalıştırma notları
 
-1. Analyze sayfasına git.
-2. İngilizce hata mesajını gir.
-3. İstersen ilgili kod parçasını ekle.
-4. Analiz Et butonuna tıkla.
-5. Üretilen Türkçe açıklamayı, nedenleri ve çözüm adımlarını incele.
-6. İhtiyaç halinde History sayfasından geçmiş analizlerine geri dön.
+- Backend varsayılan portu `3001` olarak kullanılır.
+- Frontend varsayılan olarak Vite üzerinden `5173` portunda çalışır.
+- `VITE_API_BASE_URL`, local backend adresini göstermelidir.
+- Production ortamında `FRONTEND_ORIGIN` boş bırakılamaz.
 
-## Proje Yapısı
+## Production Notları
 
-```text
-frontend/
-  src/
-    components/
-    layout/
-    pages/
-    services/
+- Canlı frontend: https://getfixora.dev
+- Canlı backend: https://fixora-api-loyo.onrender.com
+- Production auth smoke test başarılı şekilde tamamlandı.
+- Register, login ve logout akışları JWT ile çalışır.
+- `/analyze` ve `/history` protected route’lardır.
+- `/login` ve `/register` public-only route’lardır.
+- Session restore aktiftir; sayfa yenileme sonrası oturum geri yüklenir.
+- History verileri authenticated user bazında ayrılır.
+- Authorization header, protected request’lerde kullanılır.
+- MongoDB Atlas IP Access List sertleştirildi.
+- `0.0.0.0/0` kalıcı izin olarak kullanılmıyor.
+- Prod ortamında frontend origin ve backend CORS ayarları birbirine bağlıdır.
 
-backend/
-  src/
-    config/
-    controllers/
-    middlewares/
-    models/
-    routes/
-    services/
-    utils/
-```
+## Mevcut Durum / Tamamlananlar
 
-## Proje Felsefesi
-
-Fixora bilinçli olarak:
-- sade,
-- odaklı,
-- sürdürülebilir
-
-bir yapıda geliştirilir.
-
-Proje, gereksiz karmaşık mimarilerden kaçınır; temel problemi net şekilde çözen, okunabilir ve geliştirilebilir bir ürün yaklaşımını benimser.
+- Deploy ve domain yayını tamamlandı.
+- Production auth smoke test tamamlandı ve geçti.
+- Auth sistemi tamamlandı: register, login, logout.
+- Session restore tamamlandı.
+- Protected route ayrımı tamamlandı.
+- Public-only route ayrımı tamamlandı.
+- History, authenticated user scope ile çalışıyor.
+- Auth error ve generic network error ayrımı merkezileştirildi.
+- Unauthorized durumlarında session expiry davranışı eklendi.
+- MongoDB Atlas IP Access List üretim için sertleştirildi.
 
 ## Yol Haritası
 
-- [ ] Deploy ve domain yayını
-- [ ] SEO ve paylaşım önizleme iyileştirmeleri
-- [ ] Kullanıcı geri bildirim akışı
-- [ ] Paylaşılabilir analiz bağlantıları
-- [ ] Performans ve bundle optimizasyonu
-
-## Geliştirici
-
-Bu proje, modern web teknolojileri ve yapay zekâ entegrasyonunu pratik bir ürün senaryosunda birleştirmek amacıyla geliştirildi.
-
-Odak noktası:
-- gerçek dünya problemlerine çözüm üretmek,
-- sade ama etkili kullanıcı deneyimi sunmak,
-- proje ölçeğini kontrollü şekilde büyütmek.
+- Kullanıcı geri bildirim akışı
+- Paylaşılabilir analiz bağlantıları
+- SEO ve paylaşım önizleme iyileştirmeleri
+- Bundle ve performans optimizasyonu
+- History ekranı için ek UX iyileştirmeleri
 
 ## Kapanış
 
-Fixora işine yaradıysa ⭐ vererek destek olabilirsin.
+Fixora, küçük ama net bir ürün hedefi olan, üretim ortamında çalışan ve kontrollü şekilde büyütülen bir araçtır. Amaç; hata mesajını sadeleştirmek, çözüm yolunu görünür kılmak ve bunu güvenilir bir akış içinde sunmaktır.
