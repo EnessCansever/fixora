@@ -112,13 +112,31 @@ export default function LoginPage() {
             />
           </div>
 
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="w-full rounded-lg bg-[#6366F1] px-4 py-2 font-medium text-white transition hover:bg-[#4f46e5] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6366F1]/60 disabled:cursor-not-allowed disabled:opacity-60"
-          >
-            {isLoading ? 'Giriş yapılıyor...' : 'Giriş Yap'}
-          </button>
+          <div className="space-y-3">
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="w-full rounded-lg bg-[#6366F1] px-4 py-2 font-medium text-white transition hover:bg-[#4f46e5] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6366F1]/60 disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              {isLoading ? 'Hesabın doğrulanıyor...' : 'Giriş Yap'}
+            </button>
+
+            {isLoading && (
+              <div className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 dark:border-slate-800 dark:bg-slate-900/80">
+                <div className="flex items-start gap-3">
+                  <div className="mt-0.5 h-2.5 w-2.5 flex-shrink-0 rounded-full bg-[#6366F1] animate-pulse" />
+                  <div className="space-y-1">
+                    <p className="text-sm font-medium text-slate-900 dark:text-slate-100">
+                      Giriş isteğin işleniyor
+                    </p>
+                    <p className="text-xs leading-5 text-slate-600 dark:text-slate-400">
+                      Sunucu hazırlanıyorsa bu adım birkaç saniye sürebilir. Sayfayı kapatmadan beklemen yeterli.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
         </form>
       </div>
     </div>
