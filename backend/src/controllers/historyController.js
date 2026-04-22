@@ -374,6 +374,40 @@ async function deleteAllHistory(req, res) {
   }
 }
 
+async function getSimilarHistory(req, res) {
+  try {
+    const { query } = req.query
+
+    if (!query || typeof query !== 'string' || query.trim().length === 0) {
+      return res.status(400).json({
+        success: false,
+        error: 'Arama sorgusu boş olamaz.',
+      })
+    }
+
+    const searchQuery = query.trim().substring(0, MAX_HISTORY_SEARCH_LENGTH)
+    const escapedSearchQuery = escapeRegex(searchQuery)
+    const similarItems = await History.find({
+      isShared: true,
+      user: { $ne: req.user.id },
+      errorMessage: { $regex: escapedSearchQuery, $options: 'i' },
+    })
+      .select('category shortSummary shareSlug')
+      .limit(3)
+      .lean()
+
+    return res.json({
+      success: true,
+      data: similarItems,
+    })
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      error: 'Benzer hatalar alınamadı.',
+    })
+  }
+}
+
 module.exports = {
   getHistory,
   getHistoryById,
@@ -382,4 +416,5 @@ module.exports = {
   shareHistoryById,
   getPublicSharedHistory,
   deleteAllHistory,
+  getSimilarHistory,
 }
