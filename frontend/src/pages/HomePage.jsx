@@ -4,35 +4,43 @@ import { oneDark, oneLight } from 'react-syntax-highlighter/dist/esm/styles/pris
 
 const featureCards = [
   {
-    title: 'Türkçe sade açıklama',
-    description: 'Karmaşık hata metinlerini anlaşılır ve net bir dile çevirir.',
+    title: 'Sadece çeviri değil, analiz',
+    description: 'Hata mesajını bağlamıyla yorumlar; yalnızca kelime çevirisi sunmaz.',
+  },
+  {
+    title: 'Kısa ve net özet',
+    description: 'Sorunun ne olduğunu teknik ama sade bir dille hızlıca anlatır.',
   },
   {
     title: 'Muhtemel nedenler',
-    description: 'Sorunun olası kaynaklarını öncelik sırasıyla listeler.',
+    description: 'Problemin olası kaynaklarını önceliklendirilmiş şekilde listeler.',
   },
   {
     title: 'Adım adım çözüm',
-    description: 'Doğrudan uygulanabilir adımlarla nasıl ilerleyeceğini gösterir.',
+    description: 'Deneyebileceğin aksiyonları sıralı ve uygulanabilir biçimde verir.',
   },
   {
-    title: 'Örnek düzeltilmiş kod',
-    description: 'Uygulanabilir bir kod örneği ile çözüm yolunu somutlaştırır.',
+    title: 'Örnek fix kodu',
+    description: 'Çözümü somutlaştıran örnek kodla deneme süresini kısaltır.',
+  },
+  {
+    title: 'Geçmiş ve paylaşım',
+    description: 'Analizleri kaydeder, bağlantı ile takımınla paylaşmanı kolaylaştırır.',
   },
 ]
 
 const howItWorks = [
   {
-    title: 'Hatanı Yapıştır',
-    description: 'Konsoldaki İngilizce hata mesajını ve istersen kodunu ekle.',
+    title: '1) Hatanı yapıştır',
+    description: 'Konsoldaki İngilizce hata mesajını ve istersen ilgili kodu ekle.',
   },
   {
-    title: 'Anında Analiz',
-    description: 'Fixora hatayı kategorize eder ve bağlamıyla birlikte yorumlar.',
+    title: '2) Analizi al',
+    description: 'Fixora hatayı kategorize eder; özet, nedenler ve çözüm adımlarını çıkarır.',
   },
   {
-    title: 'Çözüme Ulaş',
-    description: 'Muhtemel nedenleri, çözüm adımlarını ve örnek kodu incele.',
+    title: '3) Çözümü uygula',
+    description: 'Önerilen adımları ve örnek fix kodunu kullanarak sorunu daha hızlı kapat.',
   },
 ]
 
@@ -48,11 +56,11 @@ function HomePage() {
 
         <div className="space-y-4">
           <h1 className="max-w-5xl text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl dark:text-slate-100 md:text-5xl lg:text-6xl">
-            İngilizce hata mesajlarını, uygulanabilir Türkçe çözümlere dönüştür.
+            İngilizce hata mesajını dakikalarca çözmeye çalışma. Türkçe, net ve uygulanabilir analiz al.
           </h1>
           <p className="max-w-3xl text-sm leading-7 text-slate-600 sm:text-base dark:text-slate-400">
-            Fixora, gördüğün hatanın ne anlama geldiğini saniyeler içinde açıklar. Muhtemel nedenleri,
-            adım adım çözüm önerisini ve örnek düzeltilmiş kodu tek ekranda sunar.
+            Fixora, İngilizce console ve browser hatalarını anlaşılır hale getirir; kısa özet, olası
+            nedenler, çözüm adımları ve örnek fix kodunu tek ekranda sunar.
           </p>
         </div>
 
@@ -63,23 +71,23 @@ function HomePage() {
           >
             Hemen Analiz Et
           </Link>
-          <Link
-            to="/history"
+          <a
+            href="#ornek-analiz-akisi"
             className="inline-flex min-h-11 items-center justify-center rounded-lg border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-[#6366F1]/35 hover:text-[#6366F1] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6366F1]/35 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:border-indigo-400/40 dark:hover:text-indigo-300"
           >
-            Geçmişi Görüntüle
-          </Link>
+            Örnek Kullanımı Gör
+          </a>
         </div>
 
         <div className="flex flex-wrap items-center gap-2 text-xs sm:text-sm">
           <span className="rounded-full border border-slate-200 bg-white px-3 py-1.5 font-semibold text-slate-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300">
-            Gerçek zamanlı analiz
-          </span>
-          <span className="rounded-full border border-slate-200 bg-white px-3 py-1.5 font-semibold text-slate-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300">
-            7/24 erişim
+            Hesapla güvenli erişim
           </span>
           <span className="rounded-full border border-slate-200 bg-white px-3 py-1.5 font-semibold text-slate-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300">
             Analiz geçmişi
+          </span>
+          <span className="rounded-full border border-slate-200 bg-white px-3 py-1.5 font-semibold text-slate-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300">
+            Paylaşılabilir bağlantı
           </span>
         </div>
       </header>
@@ -103,8 +111,11 @@ function HomePage() {
       </section>
 
       <section className="space-y-5">
-        <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Öne Çıkan Özellikler</h2>
-        <div className="grid gap-4 sm:grid-cols-2">
+        <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Neden Fixora?</h2>
+        <p className="max-w-3xl text-sm leading-6 text-slate-600 dark:text-slate-400">
+          Fixora, hata mesajını yalnızca Türkçeye çevirmek yerine seni çözüme götürecek bir analiz akışı sunar.
+        </p>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {featureCards.map((feature) => (
             <article
               key={feature.title}
@@ -117,7 +128,28 @@ function HomePage() {
         </div>
       </section>
 
-      <section className="space-y-5">
+      <section className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900 sm:p-6">
+        <div className="space-y-3">
+          <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100 sm:text-2xl">Analizlerini kaybetmeden, aynı yerden devam et</h2>
+          <p className="max-w-3xl text-sm leading-6 text-slate-600 dark:text-slate-400">
+            Analizlerini hesabında tutabilir, sonra tekrar açabilir ve ekibinle paylaşabilirsin. Böylece aynı hatayı
+            her seferinde sıfırdan açıklamak zorunda kalmazsın.
+          </p>
+          <div className="grid gap-3 text-sm sm:grid-cols-3">
+            <div className="rounded-lg bg-slate-50 px-3 py-3 text-slate-700 dark:bg-slate-800 dark:text-slate-300">
+              Hesabınla giriş yap, analizlerin düzenli kalsın.
+            </div>
+            <div className="rounded-lg bg-slate-50 px-3 py-3 text-slate-700 dark:bg-slate-800 dark:text-slate-300">
+              Geçmiş kayıtlarla benzer hataları daha hızlı çöz.
+            </div>
+            <div className="rounded-lg bg-slate-50 px-3 py-3 text-slate-700 dark:bg-slate-800 dark:text-slate-300">
+              Paylaşım linki ile analizi tek tıkla ekip arkadaşına gönder.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="ornek-analiz-akisi" className="space-y-5 scroll-mt-24">
         <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Örnek Analiz Akışı</h2>
         <div className="grid min-w-0 gap-4 lg:grid-cols-2">
           <article className="min-w-0 rounded-xl border border-slate-200 bg-white p-4 sm:p-5 dark:border-slate-800 dark:bg-slate-900">
@@ -127,7 +159,7 @@ function HomePage() {
             <h3 className="mt-2 text-sm font-semibold text-slate-900 dark:text-slate-100">
               Örnek Hata Mesajı
             </h3>
-            <div className="mt-3 rounded-lg border border-slate-200 bg-slate-50 p-2.5 break-words text-sm text-slate-700 sm:p-3 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200">
+            <div className="mt-3 rounded-lg border border-slate-200 bg-slate-50 p-2.5 wrap-break-word text-sm text-slate-700 sm:p-3 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200">
               Uncaught TypeError: Cannot read properties of undefined (reading 'map')
             </div>
 
@@ -209,16 +241,16 @@ function HomePage() {
       <section className="rounded-2xl border border-indigo-200 bg-linear-to-r from-indigo-50 to-white p-6 dark:border-indigo-500/30 dark:from-indigo-500/10 dark:to-slate-900">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h2 className="text-xl font-bold text-slate-900 sm:text-2xl dark:text-slate-100">Hemen Başla</h2>
+            <h2 className="text-xl font-bold text-slate-900 sm:text-2xl dark:text-slate-100">İlk hatanı şimdi analiz et</h2>
             <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
-              İlk hatanı şimdi analiz et ve çözüm yolunu netleştir.
+              Kopyala, yapıştır, çözüm adımlarını al. Fixora ile hata çözüm sürecini daha öngörülebilir hale getir.
             </p>
           </div>
           <Link
             to="/analyze"
             className="inline-flex min-h-11 items-center justify-center rounded-lg bg-[#6366F1] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#5558E8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6366F1]/35"
           >
-            Hemen Analiz Et
+            Fixora'yı Dene
           </Link>
         </div>
       </section>
