@@ -7,6 +7,7 @@ const {
 	submitHistoryFeedback,
 	shareHistoryById,
 	getPublicSharedHistory,
+	getPublicSitemap,
 	deleteAllHistory,
 	getSimilarHistory,
 } = require('../controllers/historyController')
@@ -20,6 +21,7 @@ router.delete('/history/:id', requireAuth, deleteHistoryById)
 router.post('/history/:id/feedback', requireAuth, submitHistoryFeedback)
 router.post('/history/:id/share', requireAuth, shareHistoryById)
 router.delete('/history', requireAuth, deleteAllHistory)
+router.get('/public/sitemap', getPublicSitemap)
 router.get('/public/history/:slug', getPublicSharedHistory)
 
 module.exports = router

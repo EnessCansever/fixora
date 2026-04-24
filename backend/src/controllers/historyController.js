@@ -353,6 +353,29 @@ async function getPublicSharedHistory(req, res) {
   }
 }
 
+async function getPublicSitemap(req, res) {
+  try {
+    const sitemapItems = await History.find({
+      isShared: true,
+      shareSlug: { $exists: true, $ne: '' },
+    })
+      .sort({ updatedAt: -1, createdAt: -1 })
+      .limit(1000)
+      .select('shareSlug updatedAt createdAt')
+      .lean()
+
+    return res.json({
+      success: true,
+      data: sitemapItems,
+    })
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      error: 'Site haritası alınamadı.',
+    })
+  }
+}
+
 async function deleteAllHistory(req, res) {
   try {
     const result = await History.deleteMany({
@@ -415,6 +438,7 @@ module.exports = {
   submitHistoryFeedback,
   shareHistoryById,
   getPublicSharedHistory,
+  getPublicSitemap,
   deleteAllHistory,
   getSimilarHistory,
 }
