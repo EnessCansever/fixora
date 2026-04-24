@@ -13,7 +13,7 @@ const categoryLabels = {
 }
 
 function getCategoryLabel(category) {
-  return categoryLabels[category] || category
+  return categoryLabels[category] || category || 'Paylaşılan Analiz'
 }
 
 function formatDate(value) {
@@ -43,12 +43,12 @@ function SharedAnalysisPage() {
   const [isLoading, setIsLoading] = useState(true)
   const [errorText, setErrorText] = useState('')
 
-  const categoryLabel = analysis?.category ? getCategoryLabel(analysis.category) : ''
+  const categoryLabel = analysis ? getCategoryLabel(analysis.category) : ''
   const summaryText = normalizeText(analysis?.shortSummary)
   const pageHeading = analysis
     ? summaryText
       ? `${categoryLabel}: ${summaryText}`
-      : `${categoryLabel}: Paylaşılan analiz`
+      : categoryLabel
     : 'Fixora Analiz Sonucu'
 
   const explanationText =

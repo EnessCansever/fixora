@@ -15,8 +15,8 @@ const CATEGORY_LABELS = {
   Unknown: 'Bilinmeyen',
 }
 
-const FALLBACK_TITLE = 'Paylaşılan Analiz | Fixora'
-const FALLBACK_DESCRIPTION = 'Fixora üzerinde paylaşılan hata analizini görüntüleyin.'
+const FALLBACK_TITLE = 'Paylaşılan Hata Analizi | Fixora'
+const FALLBACK_DESCRIPTION = 'Fixora üzerinde paylaşılan hata analizinin özetini ve çözüm adımlarını görüntüleyin.'
 const NOT_FOUND_DESCRIPTION = 'Bu paylaşım bağlantısına ait analiz bulunamadı.'
 const UNAVAILABLE_DESCRIPTION = 'Paylaşılan analiz şu anda yüklenemiyor. Lütfen tekrar deneyin.'
 
@@ -65,12 +65,13 @@ function buildMetadata(analysis, slug) {
   const normalizedSlug = normalizeText(slug)
   const canonicalUrl = normalizedSlug ? `${SITE_ORIGIN}/share/${normalizedSlug}` : `${SITE_ORIGIN}/share/`
   const category = getCategoryLabel(analysis?.category)
-  const shortSummary = truncateText(analysis?.shortSummary, 72)
-  const errorMessage = truncateText(analysis?.errorMessage, 140)
+  const shortSummaryForTitle = truncateText(analysis?.shortSummary, 72)
+  const shortSummaryForDescription = normalizeText(analysis?.shortSummary)
+  const errorMessageForDescription = normalizeText(analysis?.errorMessage)
 
-  const titleBase = shortSummary ? `${category}: ${shortSummary}` : category
+  const titleBase = shortSummaryForTitle ? `${category}: ${shortSummaryForTitle}` : category
   const title = truncateText(`${titleBase} | ${SITE_NAME}`, 62) || FALLBACK_TITLE
-  const descriptionSource = shortSummary || errorMessage || FALLBACK_DESCRIPTION
+  const descriptionSource = shortSummaryForDescription || errorMessageForDescription || FALLBACK_DESCRIPTION
 
   return {
     title,
