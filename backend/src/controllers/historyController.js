@@ -331,7 +331,7 @@ async function getPublicSharedHistory(req, res) {
       shareSlug: slug,
       isShared: true,
     })
-      .select('category shortSummary errorMessage codeSnippet createdAt')
+      .select('category shortSummary errorMessage codeSnippet turkishExplanation possibleCauses solutionSteps exampleFixCode notes createdAt')
       .lean()
 
     if (!sharedItem) {
