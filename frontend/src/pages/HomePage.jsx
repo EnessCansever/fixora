@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { oneDark, oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism'
+import { usePageMeta } from '../hooks/usePageMeta'
 
 const featureCards = [
   {
@@ -47,6 +48,13 @@ const howItWorks = [
 const demoCode = `const names = users.map((user) => user.name)`
 
 function HomePage() {
+  usePageMeta({
+    title: 'Fixora - Hata Mesajlarını Türkçeleştir',
+    description:
+      'İngilizce hata mesajlarını Türkçe, sade ve uygulanabilir çözümlere dönüştüren yapay zekâ destekli geliştirici aracı.',
+    robots: 'index, follow',
+  })
+
   return (
     <section className="space-y-10 pb-2 sm:space-y-12 md:space-y-14 md:pb-4">
       <header className="space-y-5 sm:space-y-6">

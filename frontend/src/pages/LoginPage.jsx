@@ -2,12 +2,18 @@ import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import { useAuth } from '../context/AuthContext'
+import { usePageMeta } from '../hooks/usePageMeta'
 
 const AUTH_NOTICE_KEY = 'fixora_auth_notice'
 
 export default function LoginPage() {
   const navigate = useNavigate()
   const { login } = useAuth()
+
+  usePageMeta({
+    title: 'Giriş Yap | Fixora',
+    robots: 'noindex, follow',
+  })
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')

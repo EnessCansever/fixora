@@ -2,10 +2,16 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import { useAuth } from '../context/AuthContext'
+import { usePageMeta } from '../hooks/usePageMeta'
 
 export default function RegisterPage() {
   const navigate = useNavigate()
   const { register } = useAuth()
+
+  usePageMeta({
+    title: 'Kayıt Ol | Fixora',
+    robots: 'noindex, follow',
+  })
 
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')

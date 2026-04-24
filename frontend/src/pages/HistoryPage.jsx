@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import toast from 'react-hot-toast'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { usePageMeta } from '../hooks/usePageMeta'
 import { createHistoryShareLink, deleteAllHistory, deleteHistory, getHistoryDetail, getHistoryList } from '../services/historyApi'
 
 const HISTORY_PAGE_LIMIT = 8
@@ -54,6 +55,12 @@ const categoryOptions = [
 
 function HistoryPage() {
   const { isAuthenticated } = useAuth()
+
+  usePageMeta({
+    title: 'Analiz Geçmişi | Fixora',
+    robots: 'noindex, nofollow',
+  })
+
   const [historyItems, setHistoryItems] = useState([])
   const [selectedId, setSelectedId] = useState('')
   const [selectedDetail, setSelectedDetail] = useState(null)

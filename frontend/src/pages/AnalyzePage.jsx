@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import AnalyzeResultCard from '../components/AnalyzeResultCard'
 import ExampleErrorList from '../components/ExampleErrorList'
 import { useAuth } from '../context/AuthContext'
+import { usePageMeta } from '../hooks/usePageMeta'
 import { analyzeErrorMessage } from '../services/analyzeApi'
 import { getSimilarHistory } from '../services/historyApi'
 
@@ -91,6 +92,12 @@ function StagedLoadingMessage({ message, step }) {
 
 function AnalyzePage() {
   const { isAuthenticated } = useAuth()
+
+  usePageMeta({
+    title: 'Hata Analizi | Fixora',
+    robots: 'noindex, follow',
+  })
+
   const [errorMessage, setErrorMessage] = useState('')
   const [codeSnippet, setCodeSnippet] = useState('')
   const [analysisResult, setAnalysisResult] = useState(null)
