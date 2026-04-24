@@ -167,7 +167,7 @@ function HomePage() {
             <h3 className="mt-2 text-sm font-semibold text-slate-900 dark:text-slate-100">
               Örnek Hata Mesajı
             </h3>
-            <div className="mt-3 rounded-lg border border-slate-200 bg-slate-50 p-2.5 wrap-break-word text-sm text-slate-700 sm:p-3 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200">
+            <div className="mt-3 rounded-lg border border-slate-200 bg-slate-50 p-2.5 break-words text-sm text-slate-700 sm:p-3 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200">
               Uncaught TypeError: Cannot read properties of undefined (reading 'map')
             </div>
 
@@ -243,6 +243,104 @@ function HomePage() {
               </div>
             </div>
           </article>
+        </div>
+      </section>
+
+      <section className="space-y-5">
+        <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Fixora nedir?</h2>
+        <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+          <p className="text-sm leading-7 text-slate-700 dark:text-slate-300">
+            Fixora; İngilizce yazılım hata mesajlarını Türkçe, sade ve uygulanabilir adımlara çeviren AI destekli bir
+            geliştirici aracıdır. Sadece bir error translator gibi çalışmakla kalmaz, hata analizi yaparak React hata
+            çözümü ve JavaScript hata çözümü süreçlerinde neyi neden kontrol etmen gerektiğini net biçimde gösterir.
+          </p>
+        </div>
+      </section>
+
+      <section className="space-y-5">
+        <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Kimler için?</h2>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <article className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
+            <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100">Junior geliştiriciler</h3>
+            <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">Hata mesajını hızlıca anlayıp doğru sırayla ilerlemek isteyenler için.</p>
+          </article>
+          <article className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
+            <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100">React / JavaScript öğrenenler</h3>
+            <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">Yeni kavramlar arasında kaybolmadan pratik çözüm adımlarına ulaşmak isteyenler için.</p>
+          </article>
+          <article className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
+            <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100">İngilizce hata mesajlarında zorlananlar</h3>
+            <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">Teknik metni Türkçe ve anlaşılır bir dille yorumlamak isteyenler için.</p>
+          </article>
+          <article className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
+            <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100">Hızlı aksiyon almak isteyenler</h3>
+            <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">Sorunu uzun debug seanslarına kalmadan kısa bir planla kapatmak isteyenler için.</p>
+          </article>
+        </div>
+      </section>
+
+      <section className="space-y-5">
+        <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Hangi hataları açıklar?</h2>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <article className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
+            <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100">TypeError</h3>
+            <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">Yanlış veri tipi veya beklenmeyen değer kullanımını açıklar.</p>
+          </article>
+          <article className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
+            <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100">ReferenceError</h3>
+            <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">Tanımsız değişken veya yanlış scope kaynaklı problemleri gösterir.</p>
+          </article>
+          <article className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
+            <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100">SyntaxError</h3>
+            <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">Sözdizimi kırılmalarını ve satır bazlı olası düzeltmeleri özetler.</p>
+          </article>
+          <article className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
+            <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100">React hataları</h3>
+            <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">State, render ve lifecycle kaynaklı React hata çözümü için yol gösterir.</p>
+          </article>
+          <article className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
+            <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100">API / Network hataları</h3>
+            <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">İstek/yanıt akışındaki kopmaları ve veri formatı sorunlarını sadeleştirir.</p>
+          </article>
+          <article className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
+            <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100">Build tool hataları</h3>
+            <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">Derleme sürecindeki config, bağımlılık ve uyumluluk problemlerini kategorize eder.</p>
+          </article>
+        </div>
+      </section>
+
+      <section className="space-y-5">
+        <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Örnek hata analizi</h2>
+        <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+          <div className="rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200">
+            TypeError: items.filter is not a function
+          </div>
+
+          <div className="mt-4 grid gap-3 md:grid-cols-3">
+            <article className="rounded-lg bg-slate-50 p-3 dark:bg-slate-800">
+              <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Bu hata ne anlama gelir?</h3>
+              <p className="mt-2 text-sm leading-6 text-slate-700 dark:text-slate-300">`filter` yalnızca dizi üzerinde çalışır; `items` beklenen anda dizi değildir.</p>
+            </article>
+
+            <article className="rounded-lg bg-slate-50 p-3 dark:bg-slate-800">
+              <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Neden olur?</h3>
+              <p className="mt-2 text-sm leading-6 text-slate-700 dark:text-slate-300">API yanıtı farklı formatta gelebilir veya state başlangıç değeri dizi yerine nesne/null olabilir.</p>
+            </article>
+
+            <article className="rounded-lg bg-slate-50 p-3 dark:bg-slate-800">
+              <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Nasıl çözülür?</h3>
+              <p className="mt-2 text-sm leading-6 text-slate-700 dark:text-slate-300">`Array.isArray(items)` kontrolü ekleyin ve state’i başlangıçta boş dizi ile başlatın.</p>
+            </article>
+          </div>
+
+          <div className="mt-4">
+            <Link
+              to="/analyze"
+              className="inline-flex min-h-10 items-center justify-center rounded-lg bg-[#6366F1] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#4f46e5] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6366F1]/35"
+            >
+              Kendi hatanı analiz et
+            </Link>
+          </div>
         </div>
       </section>
 
