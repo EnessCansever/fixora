@@ -109,20 +109,28 @@ function buildSeoContentFallback(shortSummary, errorMessage, category) {
   const summaryText = typeof shortSummary === 'string' ? shortSummary.trim() : ''
   const errorText = typeof errorMessage === 'string' ? errorMessage.trim() : ''
   const categoryText = typeof category === 'string' && category.trim() ? category.trim() : 'bu hata'
+  const normalizedCategory = categoryText.toLowerCase()
+
+  let introText = `${normalizedCategory} sınıfındaki bu hata, uygulamanın beklediği veri yapısı, çalışma sırası veya bileşen davranışı ile gerçek çalışma koşulları arasında bir uyumsuzluk oluştuğunda ortaya çıkar.`
 
   if (summaryText) {
-    return `${summaryText} Bu sorun genellikle ${categoryText.toLowerCase()} kategorisindeki bir uyumsuzluktan kaynaklanır. Kalıcı bir çözüm için veriyi doğrulayan koruyucu kontroller ekleyip ilgili kod akışını adım adım test etmeniz faydalı olur.`
+    introText = `${summaryText} Bu durum çoğunlukla ${normalizedCategory} kategorisindeki bir uyumsuzluğun görünür hale gelmiş sonucudur.`
+  } else if (errorText) {
+    const shortenedError = errorText.length > 140 ? `${errorText.slice(0, 140).trimEnd()}...` : errorText
+    introText = `${shortenedError} mesajı, kodun bir noktada beklediği koşulları karşılayamadığını ve ${normalizedCategory} ile ilişkili bir kırılma yaşandığını gösterir.`
   }
 
-  if (errorText) {
-    const shortenedError = errorText.length > 120 ? `${errorText.slice(0, 120).trimEnd()}...` : errorText
-    return `${shortenedError} mesajı, uygulamanın beklenmeyen bir koşula girdiğini gösterir. Sorunun başladığı satırı ve o satıra gelen veriyi izleyerek kaynağı hızla daraltabilirsiniz. Tekrarını azaltmak için giriş doğrulaması ve güvenli kontrol adımları eklemek önemlidir.`
+  const fallbackText = `${introText} Bu hatalar genellikle API yanıtının beklenenden farklı gelmesi, asenkron işlemlerin tahmin edilenden geç tamamlanması, null veya undefined değerlerin kontrol edilmeden kullanılması, yanlış tipte veri ile işlem yapılması ya da bileşen yaşam döngüsünde sıralama hatası yapılması gibi gerçek senaryolarda görülür. Geliştiricilerin en sık yaptığı hata, yalnızca hatanın görünen satırına odaklanıp verinin kaynağını ve önceki adımları incelememektir; bu nedenle sorun kısa süreli olarak kapanır ama benzer bir durumda tekrar eder. Daha kalıcı bir çözüm için önce hatayı yeniden üretin, ardından hataya giden veri akışını adım adım izleyin, kritik değişkenlerin tip ve değer kontrollerini ekleyin, sınır durumlarını test edin ve beklenmeyen girişler için güvenli geri dönüş davranışı tanımlayın. İyi bir pratik olarak, kritik alanlarda koruyucu koşullar ve anlamlı loglama kullanın; böylece hem hatayı daha hızlı izole eder hem de benzer problemlerin üretimde kullanıcıya yansımasını belirgin biçimde azaltırsınız.`
+
+  const words = fallbackText.split(/\s+/).filter(Boolean)
+  if (words.length > 300) {
+    return `${words.slice(0, 300).join(' ')}...`
   }
 
-  return 'Bu hata, uygulamanın beklenmeyen bir veri veya çalışma durumuyla karşılaştığını gösterir. Sorunun kaynağını bulmak için hatanın oluştuğu noktayı ve ilgili veri akışlarını adım adım inceleyin. Benzer problemlerin tekrarını azaltmak için doğrulama ve koruyucu kontroller ekleyin.'
+  return fallbackText
 }
 
-function normalizeSentenceCount(value, fallbackValue) {
+function normalizeSeoContentLength(value, fallbackValue) {
   if (typeof value !== 'string') {
     return fallbackValue
   }
@@ -132,16 +140,17 @@ function normalizeSentenceCount(value, fallbackValue) {
     return fallbackValue
   }
 
-  const sentences = normalized
-    .split(/(?<=[.!?])\s+/)
-    .map((sentence) => sentence.trim())
-    .filter(Boolean)
+  const words = normalized.split(/\s+/).filter(Boolean)
 
-  if (sentences.length < 2) {
+  if (words.length < 150) {
     return fallbackValue
   }
 
-  return sentences.slice(0, 4).join(' ')
+  if (words.length > 300) {
+    return `${words.slice(0, 300).join(' ')}...`
+  }
+
+  return normalized
 }
 
 function buildFallbackAnalysis(errorMessage, codeSnippet) {
@@ -169,7 +178,7 @@ function buildPrompt(errorMessage, codeSnippet, suggestedCategory) {
 Sen junior seviyeye uygun, açık ve Türkçe anlatan bir hata analiz yardımcısısın.
 Kullanıcı sana tarayıcı konsolundan gelen İngilizce hata mesajını ve opsiyonel kod parçasını verdi.
 
-Amacin:
+Amacın:
 - Hata mesajını Türkçe ve sade şekilde açıkla.
 - Muhtemel nedenleri sırala.
 - Uygulanabilir çözüm adımları ver.
@@ -181,7 +190,7 @@ Yazım kuralları:
 - Doğal, profesyonel ve akıcı Türkçe yaz.
 - "Türkçe", "çözüm", "açıklama", "kullanıcı", "örnek", "değişken", "geçerli" gibi kelimeleri doğru yaz.
 
-Kategori tahmini (yalnizca ipucu): ${suggestedCategory}
+Kategori tahmini (yalnızca ipucu): ${suggestedCategory}
 Bu kategoriye zorunlu değilsin, hata mesajına göre daha doğru kategori seç.
 
 Kullanıcı girdisi:
@@ -189,29 +198,33 @@ Hata mesajı: ${errorMessage}
 Kod parçası: ${codeSnippet || 'Yok'}
 
 Bağlama dikkat et:
-- "cannot read properties of undefined", "reading 'map'", "reading 'filter'", "is not a function", "is not iterable" gibi mesajlarda genelde tip kaynakli problem vardir.
+- "cannot read properties of undefined", "reading 'map'", "reading 'filter'", "is not a function", "is not iterable" gibi mesajlarda genelde tip kaynaklı problem vardır.
 - "is not defined" ifadesi genelde reference problemidir.
 - "hydration", "server/client render mismatch", "did not match" gibi ifadeler React render/hydration problemidir.
 - Açıklamayı bu anahtar ifadelere göre özelleştir, genel/geçiştirici cevap verme.
 
 Sadece geçerli JSON nesnesi döndür. Markdown, açıklama metni veya kod bloğu ekleme.
-Alanlar tam olarak su olsun:
+Alanlar tam olarak şu olsun:
 {
   "category": "Syntax Error | Reference Error | Type Error | React Error | API / Network Error | Build Tool Error | Unknown",
   "shortSummary": "Kısa, tek cümlelik özet",
   "turkishExplanation": "Türkçe, sade ve anlaşılır açıklama",
   "possibleCauses": ["madde 1", "madde 2"],
-  "solutionSteps": ["adim 1", "adim 2"],
+  "solutionSteps": ["adım 1", "adım 2"],
   "exampleFixCode": "Kısa düzeltilmiş kod örneği",
   "notes": "Dikkat edilmesi gerekenler",
-  "seoContent": "2-4 cümlelik, Türkçe, genel ama bu hataya özel kısa bilgi metni"
+  "seoContent": "150-300 kelime, Türkçe, akıcı ve özgün SEO içeriği"
 }
 
 Kurallar:
 - possibleCauses ve solutionSteps dizi olsun.
-- exampleFixCode kisa olsun ve markdown code fence kullanma.
+- exampleFixCode kısa olsun ve markdown code fence kullanma.
 - category yukarıdaki değerlerden biri olsun.
-- seoContent mutlaka Türkçe olsun, 2-4 cümle arasında kalsın, kısa ve doğal dille yazılsın.
+- seoContent mutlaka tek bir string olsun ve markdown kullanmasın.
+- seoContent 150-300 kelime aralığında olsun.
+- seoContent şu akışı doğal biçimde içersin: hatanın genel açıklaması, neden ortaya çıktığı gerçek senaryolar, geliştiricilerin sık yaptığı hatalar, çözüm için mantıksal yaklaşım, kısa bir best practice önerisi.
+- seoContent teknik ama sade bir dille yazılsın, junior geliştirici tarafından anlaşılabilsin.
+- seoContent içinde gereksiz tekrar ve anahtar kelime spam kullanma.
 - Cevap Türkçe olsun ve yazım kurallarına uygun, doğal Türkçe karakterlerle yazılsın.
 `.trim()
 }
@@ -340,7 +353,7 @@ function normalizeAnalysis(rawResult, errorMessage, codeSnippet) {
   const fallback = buildFallbackAnalysis(errorMessage, codeSnippet)
   const hasModelData = hasUsableModelField(rawResult)
   const normalizedShortSummary = normalizeTextValue(rawResult.shortSummary, fallback.shortSummary)
-  const normalizedSeoContent = normalizeSentenceCount(
+  const normalizedSeoContent = normalizeSeoContentLength(
     normalizeTextValue(rawResult.seoContent, ''),
     fallback.seoContent,
   )
