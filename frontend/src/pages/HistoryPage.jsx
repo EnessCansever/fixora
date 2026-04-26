@@ -337,6 +337,16 @@ function HistoryPage() {
       }
 
       await copyTextToClipboard(shareUrl)
+
+      try {
+        const refreshedDetail = await getHistoryDetail(selectedId)
+        if (refreshedDetail) {
+          setSelectedDetail(refreshedDetail)
+        }
+      } catch {
+        // Detay yenilemesi başarısız olsa bile paylaşım başarılı sayılır.
+      }
+
       toast.success('Paylaşım linki kopyalandı.')
     } catch (error) {
       const message = error?.message || 'Paylaşım linki oluşturulamadı.'
