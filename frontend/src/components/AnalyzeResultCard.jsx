@@ -3,7 +3,7 @@ import { CheckCircleIcon, InformationCircleIcon } from '@heroicons/react/24/outl
 import toast from 'react-hot-toast'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { oneDark, oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism'
-import { sendHistoryFeedback } from '../services/historyApi'
+import { createHistoryShareLink, sendHistoryFeedback } from '../services/historyApi'
 
 const badgeByCategory = {
   'Type Error': 'bg-amber-100 text-amber-800',
@@ -31,6 +31,7 @@ function getCategoryLabel(category) {
 
 function AnalyzeResultCard({ result }) {
   const [copied, setCopied] = useState(false)
+  const [isSharing, setIsSharing] = useState(false)
   const [isSendingFeedback, setIsSendingFeedback] = useState(false)
   const [selectedFeedback, setSelectedFeedback] = useState('')
   const [isFeedbackSubmitted, setIsFeedbackSubmitted] = useState(false)
@@ -54,6 +55,30 @@ function AnalyzeResultCard({ result }) {
     } catch (error) {
       setCopied(false)
       toast.error('Kod kopyalanamadı.')
+    }
+  }
+
+  const copyShareLink = async () => {
+    if (!result.historyId || isSharing) {
+      return
+    }
+
+    setIsSharing(true)
+
+    try {
+      const response = await createHistoryShareLink(result.historyId)
+      const shareUrl = response?.shareUrl
+
+      if (!shareUrl) {
+        throw new Error('Paylaşım linki oluşturulamadı.')
+      }
+
+      await navigator.clipboard.writeText(shareUrl)
+      toast.success('Paylaşım linki kopyalandı.')
+    } catch (error) {
+      toast.error('Paylaşım linki oluşturulamadı.')
+    } finally {
+      setIsSharing(false)
     }
   }
 
@@ -119,6 +144,28 @@ function AnalyzeResultCard({ result }) {
             {getCategoryLabel(result.category)}
           </span>
         </div>
+
+        {result.historyId && (
+          <div className="rounded-xl bg-slate-50 px-4 py-4 dark:bg-slate-800">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <h3 className="text-base font-semibold text-slate-900 dark:text-slate-100">Paylaşım</h3>
+                <p className="mt-1 text-sm leading-6 text-slate-500 dark:text-slate-400">
+                  Bu analizin paylaşım bağlantısını oluşturup kopyalayabilirsin.
+                </p>
+              </div>
+
+              <button
+                type="button"
+                onClick={copyShareLink}
+                disabled={isSharing}
+                className="inline-flex min-h-10 items-center justify-center rounded-lg border border-indigo-300 bg-indigo-50 px-4 py-2 text-sm font-semibold text-[#6366F1] transition hover:bg-indigo-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6366F1]/35 disabled:cursor-not-allowed disabled:opacity-60 dark:border-indigo-500/30 dark:bg-indigo-500/15 dark:text-indigo-300 dark:hover:bg-indigo-500/25"
+              >
+                {isSharing ? 'Hazırlanıyor...' : 'Paylaşım linkini kopyala'}
+              </button>
+            </div>
+          </div>
+        )}
 
         <div className="space-y-4 border-t border-slate-100 pt-5 dark:border-slate-800">
           <div className="rounded-xl bg-slate-50 px-4 py-4 dark:bg-slate-800">
