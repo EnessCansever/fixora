@@ -7,7 +7,7 @@ function PublicOnlyRoute() {
   if (isAuthLoading) {
     return (
       <div className="flex min-h-screen items-center justify-center">
-        <p className="text-slate-600 dark:text-slate-400">Yukleniyor...</p>
+        <p className="text-slate-600 dark:text-slate-400">Yükleniyor...</p>
       </div>
     )
   }

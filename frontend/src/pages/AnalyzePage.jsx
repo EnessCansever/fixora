@@ -149,12 +149,6 @@ function AnalyzePage() {
   const handleSubmit = async (event) => {
     event.preventDefault()
     const submitId = latestSubmitIdRef.current + 1
-    latestSubmitIdRef.current = submitId
-
-    setErrorText('')
-    setAnalysisResult(null)
-    setSimilarItems([])
-    setIsSimilarLoading(false)
 
     const trimmedErrorMessage = errorMessage.trim()
     const trimmedCodeSnippet = codeSnippet.trim()
@@ -164,6 +158,13 @@ function AnalyzePage() {
       toast.error('Hata mesajı girin.')
       return
     }
+
+    latestSubmitIdRef.current = submitId
+
+    setErrorText('')
+    setAnalysisResult(null)
+    setSimilarItems([])
+    setIsSimilarLoading(false)
 
     setIsLoading(true)
     let result = null
