@@ -7,7 +7,7 @@ const router = express.Router()
 
 // Basit validation middleware
 const validateAnalyzeRequest = (req, res, next) => {
-  const { errorMessage } = req.body
+  const { errorMessage, codeSnippet } = req.body
 
   // Boş request kontrolü
   if (!errorMessage) {
@@ -38,6 +38,21 @@ const validateAnalyzeRequest = (req, res, next) => {
     return res.status(400).json({
       success: false,
       error: 'Hata mesajı çok uzun (en fazla 5000 karakter).',
+    })
+  }
+
+  // Kod parçası opsiyonel, ama gönderildiyse metin olmalı ve sınırlı kalmalı 
+  if (codeSnippet !== undefined && codeSnippet !== null && typeof codeSnippet !== 'string') {
+    return res.status(400).json({
+      success: false,
+      error: 'Kod parçası bir metin olmalı.',
+    })
+  }
+
+  if (typeof codeSnippet === 'string' && codeSnippet.trim().length > 10000) {
+    return res.status(400).json({
+      success: false,
+      error: 'Kod parçası en fazla 10000 karakter olabilir.',
     })
   }
 
