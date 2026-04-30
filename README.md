@@ -14,9 +14,9 @@ Uygulama; analiz, geçmiş kayıtlar, public share linkleri ve SEO uyumlu payla�
 
 ## Canlı Demo
 
-Frontend: https://getfixora.dev
+Frontend: [https://getfixora.dev](https://getfixora.dev)
 
-Backend: https://fixora-api-loyo.onrender.com
+Backend: [https://fixora-api-loyo.onrender.com](https://fixora-api-loyo.onrender.com)
 
 ## İçindekiler
 
@@ -238,7 +238,7 @@ Aşağıdaki adımlar local geliştirme ortamı içindir.
 ### 1) Repoyu klonla
 
 ```bash
-git clone <repo-url>
+git clone https://github.com/EnessCansever/fixora.git
 cd fixora
 ```
 
@@ -304,8 +304,8 @@ VITE_API_BASE_URL=http://localhost:3001/api
 
 ## Production Notları
 
-- Canlı frontend: https://getfixora.dev
-- Canlı backend: https://fixora-api-loyo.onrender.com
+- Canlı frontend: [https://getfixora.dev](https://getfixora.dev)
+- Canlı backend: [https://fixora-api-loyo.onrender.com](https://fixora-api-loyo.onrender.com)
 - Auth akışı production’da test edildi ve stabil çalışır.
 - Analyze → history → share akışı uçtan uca doğrulandı.
 - Public share sayfaları SEO ve meta açısından doğrulandı.
